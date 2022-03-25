@@ -1,7 +1,7 @@
 # UpgradePlus
 UpgradePlus is an upgrade mod based on [Oempa's Equipment Upgrader mod](https://github.com/Levi2229/UpgradeEquipment)  
 
-The Blacksmith is a TownNPC available after beating Eater of Worlds, Eye of Cthulhu, or Brain of Cthulhu, trade in tokens for Weapon, Armor, Accessory, or Wing upgrades. Beat bosses or strong mobs to get tokens, higher boss hp = more tokens.
+The Blacksmith is a TownNPC available after beating Eoc, EoW, or BoC. Trade in tokens for Weapon, Armor, Accessory, or Wing upgrades. Beat bosses or strong mobs to get tokens, higher boss hp = more tokens.
 
 ## New Features
 * Upgrade your armor, wings, and accessories
@@ -10,16 +10,19 @@ The Blacksmith is a TownNPC available after beating Eater of Worlds, Eye of Cthu
 
 
 ## Improvements
-* Items remember favorites 
+* Items remember favorites  
 Itemslot.Context swapped from `BankItem` to `InventoryItem`
 * Right click the reforge button to buy max upgrades
 * Preview the cost to reach cap
 
+## Planned
+* Better Blacksmith sprite
 
 ## Known Bugs
 * Calamity wipes the levels from gear when reforging from the goblin tinkerer  
 Goblin tinkerer will refund items at standard rates when calamity is enabled to compensate
-* A Weapon's upgraded crit chance isn't applied to their projectiles, but *is* factored into crit rollover
+* Pojectiles don't crit more from the crit chance given by upgrading, crit rollover still works as intended 
+* The upgrade slot shows a ¹ in the corner because it's an inventory slot internally
 
 ## Credits
 https://github.com/Levi2229/UpgradeEquipment  

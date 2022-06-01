@@ -1,0 +1,6 @@
+displayName = UpgradePlus
+author = Tacomancer
+version = 1.0.0
+includeSource = true
+homepage = https://github.com/JTacoCSharpie/UpgraderPlus
+buildIgnore = .vs\*, .git\*, ignore\*, .gitignore, .gitattributes, *.MD, *.csproj, *.user, obj\*, bin\*, *.sln

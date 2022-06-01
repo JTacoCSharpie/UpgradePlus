@@ -22,7 +22,7 @@ Goblin tinkerer will refund items at standard rates when calamity is enabled to 
 * Player projectiles from non-hotbar sources (accessories, armor bonuses, mounts, dual wielding mod, etc) inherit crit damage and rollover from the held item instead of their source
 * Projectiles don't crit more often from the crit chance given by upgrading, crit rollover still works when they do crit
 * Upgrades don't increase speed for wings in social slots (Antisocial mod) or WingSlot
-* The upgrade slot shows a ยน in the corner because it's an inventory slot internally
+* The upgrade slot shows a น in the corner because it's an inventory slot internally
 
 ## Credits
 https://github.com/Levi2229/UpgradeEquipment  

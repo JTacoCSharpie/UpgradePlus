@@ -38,5 +38,6 @@ Crit Damage is disabled (config) by default until 1.4
 
 
 --Changelog--
-1.0.0 Release:
-Released
+1.0.1 Release:
+* Released
+* Mod Icon Added

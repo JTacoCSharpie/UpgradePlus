@@ -1,0 +1,57 @@
+[i]UpgradePlus is a gear upgrade mod inspired by [url=https://forums.terraria.org/index.php?threads/equipment-upgrader-mod.85517/]Oempa's Equipment Upgrade[/url][/i]
+
+Fight bosses and strong mobs to get tokens you can trade to upgrade your gear - Take your favorite weapons deeper into the game, grind past difficult bosses and level gear to ridiculous heights.
+
+-[b]Features[/b]->
+[list][*] Directly Upgrade Weapons, Wings, Armor & Accessories
+[*] Configs: Crit Rollover, 3 stat balance presets, configurable weapon autofire, stat bonus tuning, and slightly more!
+[*] New Stats: Bonus Crit Damage & Wing Speed upgrades
+[*] QoL: Slot remembers favorite status & right click to max level, sleeves convert to tokens automatically[/list]
+
+-[b]Getting Started[/b]->
+The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil boss is defeated. Talk to him to trade tokens and token sleeves from your inventory to upgrade gear. 
+Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range [spoiler]based on enemy HP+Atk+Def, doubling in [spoiler]hardmode and again in post-ML for 4x base token drops.[/spoiler][/spoiler]
+
+-[b]Includes[/b]->
+* 1 TownNPC, 2 Items
+* [spoiler]1 instanced GlobalItem, 1 instanced ModPlayer, 1 instanced GlobalProjectile[/spoiler]
+
+-[b]Known Issues[/b]->
+[list][*] Calamity removes levels when reforging (goblin tinkerer).
+Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
+[*] The upgrade slot shows a 1 in the corner
+[*] Mana cost isn't updated in item descriptions (tML bug)
+[*] Speed upgrades don't effect mining speeds (tML bug)[/list]
+
+-[b]New in 1.4[/b]->
+* Bestiary Info & Blacksmith NPC happiness
+* Now tracks tokens spent per player
+
+-[b]Changelog[/b]->
+1.0.3 - 1.0.4 Release:
+* Updated Homepage
+* Bugfix with projectiles that can't get their lvl
+
+1.0.2 Release:
+* Updated for 1.4
+* Bestiary Entry & NPC Happiness for Blacksmith
+* Slightly improved NPC chat lines, + token tracking
+* Crit DMG & Rollover fixed: C. DMG now on by default
+* Added more details to crit debug
+* Standard Damage scaling per lv changed 6% -> 5.5%
+* Non-prefixable weapons can now count as weapons
+ 
+1.0.1 Release:
+* Released
+* Mod Icon Added
+
+-[b]Additional Sources[/b]->
+[quote][i]1.4:[/i]
+>Build from the [url=https://github.com/JTacoCSharpie/UpgraderPlus]Github[/url]'s main branch [/quote]
+[quote][i]1.3:[/i]
+>In-game Mod browser & Mod browser mirrors
+>Direct download or build from the [url=https://github.com/JTacoCSharpie/UpgraderPlus/tree/1.3]Github[/url]'s 1.3 branch [/quote]
+
+-[b]Also Check Out[/b]->
+[url=https://forums.terraria.org/index.php?threads/equipment-upgrader-mod.85517/]Oempa's Equipment Upgrade mod for 1.3[/url] also available on github
+[url=https://github.com/sjieh/UpgradeEquipment]hrr_'s fork of EU[/url], available in-game in 1.3

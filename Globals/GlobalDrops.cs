@@ -1,12 +1,15 @@
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
-namespace UpgraderPlus.Globals
+namespace UpgradePlus.Globals
 {
     class GlobalDrops : GlobalNPC
     {
-        public override void NPCLoot(NPC npc)
+
+        public override void OnKill(NPC npc)
         {
 
             if (npc.boss || npc.lifeMax >= 1000 && npc.damage > 0)
@@ -14,7 +17,7 @@ namespace UpgraderPlus.Globals
                 double dropCalc;
                 int dropCount;
                 float stageMulti = 1; // World progression multiplier
-                Random random = new Random();
+                Random random = new();
                 if (Main.hardMode)
                 {
                     stageMulti = 2;
@@ -64,5 +67,6 @@ namespace UpgraderPlus.Globals
             }
 
         }
+
     }
 }

@@ -1,0 +1,88 @@
+[CENTER][ATTACH type="full" alt="icon.png"]371552[/ATTACH]
+[SIZE=5][I]UpgradePlus is a [/I][/SIZE][SIZE=4][I][S]weapon[/S] [/I][/SIZE][SIZE=5][I]gear upgrade mod inspired by [URL='https://forums.terraria.org/index.php?threads/equipment-upgrader-mod.85517/']Oempa's Equipment Upgrade[/URL][/I][/SIZE]
+
+Fight bosses and strong mobs to get tokens you can trade to upgrade your gear.
+Take your favorite weapons deeper into the game, grind past difficult bosses, level gear to ridiculous heights.
+
+[B]Features:[/B]
+1 Town NPC, 2 Items
+Directly Upgrade Weapons, Wings, Armors & Accessories
+Weapons: Accepts any weapon that accepts prefixes [SIZE=3](1.3)[/SIZE] or any weapon with non-zero damage [SIZE=3](1.4)[/SIZE], supports all damage types [SIZE=2]I think[/SIZE]
+Configs: Crit Rollover, 3 stat balance presets, configurable weapon auto-fire, stat bonus tuning, and [SIZE=3]slightly[/SIZE] more!
+New Stats: Bonus Crit Damage & Wing Speed
+QoL: Remembers favorite status and right click to max, automatically converts sleeves to tokens
+
+[SPOILER="Downloading"]
+1.4:
+[URL='https://steamcommunity.com/sharedfiles/filedetails/?id=2851452153']Available for download on Steam Workshop[/URL]
+Build from  [URL='https://github.com/JTacoCSharpie/UpgraderPlus']Github[/URL]
+1.3:
+Available in-game on 1.3 Mod Browser & Mod Browser mirrors
+Direct download or build from [URL='https://github.com/JTacoCSharpie/UpgraderPlus/tree/1.3']Github[/URL]
+[/SPOILER]
+
+[B]Getting Started[/B]
+The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil boss is defeated. Talk to him to trade tokens and token sleeves from your inventory to upgrade gear. Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range based on [ISPOILER]enemy HP+Atk+Def, doubling in [/ISPOILER][ISPOILER]hardmode and again in post ML for 4x base token drops.[/ISPOILER]
+
+
+[/CENTER]
+[SPOILER="Known Issues"]
+[CENTER][SPOILER="1.4"][/SPOILER][/CENTER]
+[SPOILER="1.4"]
+[LIST]
+[*]Calamity removes levels when reforging (goblin tinkerer). Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
+[*]The upgrade slot shows a ¹ in the corner
+[*]Mana cost isn't updated in item descriptions (tML bug)
+[*]Speed upgrades don't effect mining speeds (tML bug)
+[/LIST]
+[CENTER][/CENTER]
+[/SPOILER]
+[CENTER]
+[SPOILER="1.3"][/SPOILER][/CENTER]
+[SPOILER="1.3"]
+[LIST]
+[*]Calamity removes levels when reforging (goblin tinkerer). Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
+[*]Player projectiles spawned from non-hotbar sources (dual wielding mod, wings, armor bonuses, etc) will use the Crit Damage and Rollover of the currently held item
+[*]Crit Chance doesn't make projectiles crit more often, but does factor in with Crit Rollover
+[*]The upgrade slot shows a ¹ in the corner
+[*]Upgraded wings don't have appropriate speeds when in WingSlot's Wingslot or in the social slot using Antisocial.
+[/LIST]
+[CENTER][/CENTER]
+[/SPOILER]
+[CENTER][/CENTER]
+
+[/SPOILER]
+[SPOILER="Changelog"]
+1.0.3 - 1.0.4 Hotfixes:
+[LIST]
+[*]Updated Homepage
+[*]Bugfix with projectiles that can't get their lvl
+[/LIST]
+1.0.2 1.4 Port Update:
+[LIST]
+[*]Updated to 1.4
+[*]Bestiary Entry & NPC Happiness for Blacksmith
+[*]Slightly improved NPC chat lines, + token tracking
+[*]Crit DMG & Rollover fixed: C. DMG now on by default
+[*]Added more details to crit debug
+[*]Standard Damage scaling per lv changed 6% -> 5.5%
+[*]Non-prefixable weapons can now count as weapons
+[/LIST]
+1.0.1 Release Update:
+[LIST]
+[*][LEFT]First Release[/LEFT]
+[*][LEFT]Added Mod Icon[/LEFT]
+[/LIST]
+[/SPOILER]
+
+
+
+
+[CENTER][ATTACH type="full" alt="Capture.PNG"]371567[/ATTACH][ATTACH type="full" width="327px" alt="Capture.PNG"]371569[/ATTACH][ATTACH type="full" width="349px" alt="Capture.PNG"]371577[/ATTACH]
+
+[SPOILER="Also check out:"]
+[URL='https://forums.terraria.org/index.php?threads/equipment-upgrader-mod.85517/']tModLoader - Equipment Upgrader mod[/URL] Equipment Upgrader by Oempa, also available in-game and on github
+[URL='https://github.com/sjieh/UpgradeEquipment']GitHub - sjieh/UpgradeEquipment: Terraria Modloader mod that allows you to upgrade equipment similar to reforging.[/URL] hrr_'s fork, also available in-game
+[/SPOILER]
+[ATTACH type="full" alt="CompressedToken.png"]371612[/ATTACH][ATTACH type="full" width="61px" alt="UpgradeToken.png"]371613[/ATTACH]
+[/CENTER]

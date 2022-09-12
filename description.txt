@@ -1,4 +1,4 @@
-UpgradePlus is an upgrade mod based on
+UpgradePlus is an upgrade mod inspired by
 Oempa's Upgrade Equipment
 
 The Blacksmith is a town NPC that can arrive after 
@@ -10,14 +10,17 @@ into the game or grind past difficult bosses.
 
 --Features--
 >Upgrade weapons, wings, & wearables
->Stacks with Oempa's EU & hrr_'s fork
 >New stats: Crit Damage & Wing Speed
 
 --Improvements--
 Right click to max out an item!
 Remembers item favorite status
 More configs! +Jank test features
-Supports all damage types, I think
+Supports all damage types, Mods included.
+
+--New in 1.4--
+Bestiary Info & Blacksmith NPC happiness
+Now tracks tokens spent per player
 
 --Q&A--
 * What drops tokens?
@@ -28,16 +31,25 @@ maxHP+Atk+Def. Boosted in HM + further in postML.
 * Calamity removes levels when reforging (goblin).
 Reforged gear will have it's tokens refunded at 
 standard rates (90% returned) to prevent mishaps.
- * Player projectiles spawned from non-hotbar sources
-can have wrong Crit Damage and Rollover. 1.3 limit, 
-Crit Damage is disabled (config) by default until 1.4
-* Crit chance doesn't raise projectile crit chance
 * The upgrade slot shows a 1 in the corner
-* Wings don't have appropriate speeds in WingSlot 
- or in the social slot using Antisocial
+* Mana cost isn't updated in item descriptions
+* Speed upgrades don't effect mining speeds
 
 
 --Changelog--
+1.0.3 - 1.0.4 Release:
+* Updated Homepage
+* Bugfix with projectiles that can't get their lvl
+
+1.0.2 Release:
+* Updated for 1.4
+* Bestiary Entry & NPC Happiness for Blacksmith
+* Slightly improved NPC chat lines, + token tracking
+* Crit DMG & Rollover fixed: C. DMG now on by default
+* Added more details to crit debug
+* Standard Damage scaling per lv changed 6% -> 5.5%
+* Non-prefixable weapons can now count as weapons
+
 1.0.1 Release:
 * Released
 * Mod Icon Added

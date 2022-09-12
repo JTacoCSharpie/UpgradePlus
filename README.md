@@ -1,27 +1,20 @@
+#### Looking for the 1.3 code? Use the branches dropdown or extract it in-game
 # UpgradePlus
-UpgradePlus is an upgrade mod based on [Oempa's Equipment Upgrader mod](https://github.com/Levi2229/UpgradeEquipment)  
+UpgradePlus is an upgrade mod inspired by [Oempa's Equipment Upgrader mod](https://github.com/Levi2229/UpgradeEquipment)  
 
 The Blacksmith is a TownNPC available after beating Eoc, EoW, or BoC. Fight bosses and strong mobs for tokens you can trade to upgrade your gear, take your favorite weapons deeper into the game or grind past difficult bosses.
 
-## New Features
-* Upgrade your armor, wings, and accessories
-* Mana reduction added to mage weapons
-* (Config) Autofire if your weapon is at or past a configurable level
-
-
-## Improvements
-* Items remember favorites  
-Itemslot.Context swapped from `BankItem` to `InventoryItem`
-* Right click the reforge button to buy max upgrades
-* Preview the cost to reach the nearest level cap
-* Serverside configs & more configs in general
+## Features
+* Directly Upgrade Weapons, Wings, Armor & Accessories through instanced GlobalItems
+* Configs: Crit Rollover, 3 stat balance presets, configurable weapon autofire, stat bonus tuning, and slightly more!
+* New Stats: Bonus Crit Damage & Wing Speed upgrades
+* QoL: Right click to max & token sleeves automatically convert to tokens during purchases
 
 ## Known Bugs & Issues
-* Calamity wipes the levels from gear when reforging from the goblin tinkerer  
-Goblin tinkerer will refund items at standard rates when calamity is enabled to compensate
-* Player projectiles from non-hotbar sources (accessories, armor bonuses, mounts, dual wielding mod, etc) inherit crit damage and rollover from the held item instead of their source
-* Projectiles don't crit more often from the crit chance given by upgrading, crit rollover still works when they do crit
-* Upgrades don't increase speed for wings in social slots (Antisocial mod) or WingSlot
+* Calamity removes levels when reforging (goblin tinkerer)  
+Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
+* Mana cost isn't updated in item descriptions (tML bug)
+* Speed upgrades don't effect mining speeds (tML bug)
 * The upgrade slot shows a ¹ in the corner because it's an inventory slot internally
 
 ## Credits

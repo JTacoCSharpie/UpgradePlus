@@ -1,16 +1,16 @@
 ﻿using Terraria.ModLoader.Config;
 using System.ComponentModel;
 
-namespace UpgraderPlus
+namespace UpgradePlus
 {
     public class Client : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Header("Core Features")]
-        [Label("Upgrades also increase crit damage - See Known Bugs")]
-        [Tooltip("Stacks with crit rollover. Default: Disabled - Will default to Enabled in 1.4")]
-        [DefaultValue(false)]
+        [Label("Upgrades also increase crit damage")]
+        [Tooltip("Stacks with crit rollover. Default: Enabled")]
+        [DefaultValue(true)]
             public bool doCritDamage;
         [Label("Items autofire at level threshold")]
         [Tooltip("Upgraded items auto-reuse at & above configurable level.\nDefault: Disabled for Authentic modded experience but Recommended QoL.")]
@@ -59,11 +59,11 @@ namespace UpgraderPlus
             public bool doWingUpgrade;
 
         [Header("Debug")]
-        [Label("Crit Rollover: Say in chat what a projectile thinks its crit is")]
+        [Label("Crit Rollover: Say extended projectile details OnHit in chat")]
         [DefaultValue(false)]
             public bool doDebug;
+
         [Header("See next page for more options")]
-        [Tooltip("Default: Enabled")]
             public bool ThisOptionDoesNothingButItdBeFunnyIfItSecretlyRecordedWhoActivatesItInSomeSortOfMassSocialExperimentTooBadItsJustAHeader;
 
         public override void OnChanged()
@@ -82,11 +82,14 @@ namespace UpgraderPlus
             Levelhandler.doDebug = doDebug;
         }
     }
+
+    [BackgroundColor(30, 15, 15, 150)]
     public class Server : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
         [Header("Core Features")]
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Change maximum upgrade cap.")]
         [Tooltip("Default: 40")]
         [Increment(5)]
@@ -94,6 +97,7 @@ namespace UpgraderPlus
         [DefaultValue(40)]
             public int tierCap;
 
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Stat Balance")]
         [Tooltip("0. Overpowered\n1. Default\n2. Underpowered - Some stat's don't apply")]
         [Range(0, 2)]
@@ -101,10 +105,12 @@ namespace UpgraderPlus
         [Slider]
             public int statFormulaModel;
 
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Cap upgrades at 20 until hardmode?")]
         [Tooltip("Default: Enabled - Recommended Enabled")]
         [DefaultValue(true)]
             public bool doHardmodeCaps;
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Let players refund Levels")]
         [Tooltip("Serverside Override - Default: Enabled")]
         [DefaultValue(true)]
@@ -112,6 +118,7 @@ namespace UpgraderPlus
 
         [Header("Tune Features")]
         [Label("Autofire Threshold")]
+        [BackgroundColor(100, 50, 50, 255)]
         [Tooltip("Change the level force autofire applies at if enabled - Default: 20\n0 makes all items autofire - 256 disables it for all players")]
         [Increment(5)]
         [Range(0, 256)]
@@ -119,10 +126,12 @@ namespace UpgraderPlus
             public int reuseLevel;
 
         [Header("Fun Jank")]
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Crit chance past 100% rolls into additional crits")]
-        [Tooltip("E.G: 130% crit = Default crit with a 30% chance of doing 4x. Default: Disabled")]
+        [Tooltip("E.G: 130% crit = Default crit with a 30% chance of doing 4x. Default: Disabled\nIf you're having damage numbers of only 2 pop up, try disabling this first.")]
         [DefaultValue(false)]
             public bool critRollover;
+        [BackgroundColor(100, 50, 50, 255)]
         [Label("Slap levels on any non-stackable")]
         [Tooltip("High Velocity Wire Cutters? 4x speed Clemenator? Sure, why not. Default: Disabled")]
         [DefaultValue(false)]

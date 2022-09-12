@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
-namespace UpgraderPlus
+namespace UpgradePlus
 {
 
     public enum ItemType
@@ -41,7 +42,7 @@ namespace UpgraderPlus
 
         public static int GetItemType(Item item)
         {
-            int ret = 0; // Defaults to Weapon
+            int ret = 0; // Defaults to ItemType.Weapon
             ret = (item.accessory) ? (int)ItemType.Accessory : ret;
             ret = (item.wingSlot > 0) ? (int)ItemType.Wings : ret;
             ret = (item.headSlot > -1 || item.bodySlot > -1 || item.legSlot > -1) ? (int)ItemType.Armor : ret;
@@ -86,8 +87,13 @@ namespace UpgraderPlus
             const short conv = short.MaxValue - 1;
 
             int remainder = 0; // The remaining tokens carried over between buys
-            int level = item.GetGlobalItem<Globals.ItemLevelHooks>().level;
             int type = GetItemType(item);
+            int level = 0;
+            if (item.TryGetGlobalItem(out Globals.ItemLevelHooks lvHooks))
+            {
+                level = lvHooks.level;
+            }
+
             for (int i = level; i < cap; i++)
             {
                 int taken;
@@ -192,7 +198,7 @@ namespace UpgraderPlus
 
             if (remainder > 0) // Give remaining value in tokens
             {
-                player.QuickSpawnItem(ModContent.ItemType<Items.UpgradeToken>(), remainder);
+                player.QuickSpawnItem(NPC.GetSource_None(), ModContent.ItemType<Items.UpgradeToken>(), remainder);
             }
 
         }
@@ -202,15 +208,23 @@ namespace UpgraderPlus
         {
             if (doClientRefunds && doServerRefunds)
             {
-                int lv = item.GetGlobalItem<Globals.ItemLevelHooks>().level;
-                item.GetGlobalItem<Globals.ItemLevelHooks>().level -= lv;
-                int tokens = (int)Math.Ceiling((GetCostForGivenLevel(item, lv) * 0.9));
-                int compressed = (int)(tokens / (short.MaxValue - 1));
-                tokens -= ((short.MaxValue - 1) * compressed);
-                Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.UpgradeToken>(), tokens);
-                if (compressed > 0)
+                if (item.TryGetGlobalItem(out Globals.ItemLevelHooks lvHooks))
                 {
-                    Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<Items.CompressedToken>(), compressed);
+                    int lv = lvHooks.level;
+                    lvHooks.level -= lv;
+
+                    int totalCost = GetCostForGivenLevel(item, lv);
+                    UPPlayer upl = Main.LocalPlayer.GetModPlayer<UPPlayer>();
+                    upl.SpentTokens = Math.Max(upl.SpentTokens - totalCost, 0);
+                    int tokens = (int)Math.Ceiling(totalCost * 0.9);
+                    int compressed = (int)(tokens / (short.MaxValue - 1));
+                    tokens -= ((short.MaxValue - 1) * compressed);
+
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_None(), ModContent.ItemType<Items.UpgradeToken>(), tokens);
+                    if (compressed > 0)
+                    {
+                        Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_None(), ModContent.ItemType<Items.CompressedToken>(), compressed);
+                    }
                 }
             }
         }
@@ -221,7 +235,7 @@ namespace UpgraderPlus
         /// <br>Velocity, ManaCost, WingPower, Defence, Summon</br> </summary>
         public static float GetStat(int level, string statType)
         {
-            float ret = new float();
+            float ret = new();
             if (formula == 0) // OP
             {
                 ret = (statType == "Damage") ? (0.4f * level) : ret;
@@ -239,8 +253,8 @@ namespace UpgraderPlus
             if (formula == 1) // Balanced
             {
                 // total *= value
-                ret = (statType == "Damage") ? (0.06f * level) : ret;
-                // useTime *= 1(base)+value
+                ret = (statType == "Damage") ? (0.055f * level) : ret;
+                // useTime *= 1+value
                 ret = (statType == "Speed") ? Math.Min((0.025f * level), 3) : ret;
                 // total += CritChance
                 ret = (statType == "CritChance") ? (1f * level) : ret;
@@ -250,15 +264,15 @@ namespace UpgraderPlus
                 ret = (statType == "Size") ? Math.Min((0.05f * level), 1) : ret;
                 // base *= 1 + knockback
                 ret = (statType == "Knockback") ? (0.05f * level) : ret;
-                // velocity = base + velocity
+                // velocity *= 1 + velocity
                 ret = (statType == "Velocity") ? Math.Min((0.075f * level), 3) : ret;
-                // final mana cost minus ManaCost%
+                // final mana cost minus flat ManaCost%
                 ret = (statType == "ManaCost") ? Math.Min(50, (1.5f * level)) : ret;
                 // base * wingPower
                 ret = (statType == "WingPower") ? Math.Min((0.025f * level), 2) : ret;
                 // +flat defence
                 ret = (statType == "Defence") ? (0.1f * level) : ret;
-                // +summons (rounded down to nearest number by int casting)
+                // +flat summons (rounded down to nearest number by int casting)
                 ret = (statType == "Summons") ? Math.Min((0.05f * level), 3) : ret;
             }
             if (formula == 2) // Underpowered

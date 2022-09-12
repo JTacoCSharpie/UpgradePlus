@@ -1,8 +1,10 @@
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 
-namespace UpgraderPlus.Items
+namespace UpgradePlus.Items
 {
 	public class CompressedToken : ModItem
 	{
@@ -10,22 +12,22 @@ namespace UpgraderPlus.Items
 		{
 			DisplayName.SetDefault("Upgrade Token Sleeve");
 			Tooltip.SetDefault("A roll of 32,766 tokens\nJackpot.");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
 		}
 
 		public override void SetDefaults() 
 		{
-			item.rare = ItemRarityID.Orange;
-			item.value = 500 * (short.MaxValue-1);
-			item.maxStack = short.MaxValue-1; // Terraria syncs items using shorts, so any higher value will cause oddities in MP
-			item.width = 32;
-			item.height = 32;
+			Item.rare = ItemRarityID.Orange;
+			Item.value = 500 * (short.MaxValue-1);
+			Item.maxStack = short.MaxValue-1; // Terraria syncs items using shorts, so any higher value will cause oddities in MP
+			Item.width = 32;
+			Item.height = 32;
 		}
 		public override void AddRecipes()
 		{
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = CreateRecipe(1);
 			recipe.AddIngredient(ModContent.ItemType<UpgradeToken>(), short.MaxValue - 1);
-			recipe.SetResult(this, 1);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
 }

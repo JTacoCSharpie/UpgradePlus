@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI;
+using System.Collections.ObjectModel;
 
 namespace UpgradePlus.Globals
 {
@@ -44,69 +45,74 @@ namespace UpgradePlus.Globals
 			return myClone;
 		}
 
+		public List<TooltipLine> GetNewTooltip(Item item) // Moved to it's own method so I'll have it if I ever find an ideal performant way to cache tooltips
+        {
+			List<TooltipLine> lines = new();
+			Color cappedTitle = ItemRarity.GetColor(ItemRarityID.LightRed);
+			Color cappedStats = ItemRarity.GetColor(ItemRarityID.Green);
+			if (level >= Levelhandler.tierCap)
+			{
+				cappedTitle = Main.DiscoColor;
+				cappedStats = ItemRarity.GetColor(ItemRarityID.Quest);
+			}
+
+			int type = Levelhandler.GetItemType(item);
+			string stats = "";
+			if (type == (int)ItemType.Weapon)
+			{
+				stats +=
+					(int)((Levelhandler.GetStat(level, "Damage") * 100) + 100) + "% damage";
+				if (Levelhandler.doCritDamage)
+				{
+					stats += " / " + (2 + Levelhandler.GetStat(level, "CritDamage")) + "X Crits";
+				}
+				stats += "\n";
+				if (Levelhandler.doWeaponSize)
+				{
+					stats += (Levelhandler.GetStat(level, "Size") + 1) + "X Size / ";
+				}
+				stats += ((Levelhandler.GetStat(level, "Speed") * Levelhandler.speedMulti * 0.01) + 1) + "X Firerate" +
+				"\n+" + Levelhandler.GetStat(level, "CritChance") + "% critical chance";
+				if (Levelhandler.doKnockback)
+				{
+					stats += "\n" + (int)((Levelhandler.GetStat(level, "Knockback") * Levelhandler.KBMulti) + 100) + "% knockback";
+				}
+				if (item.shoot > ProjectileID.None)
+				{
+					stats += "\n" + (Levelhandler.GetStat(level, "Velocity") * Levelhandler.velMulti + 100) + "% velocity";
+				}
+				if (item.mana > 0)
+				{
+					stats += "\n-" + Levelhandler.GetStat(level, "ManaCost") + "% mana cost";
+				}
+			}
+			else if (type == (int)ItemType.Armor)
+			{
+				stats += Levelhandler.GetStat(level, "Defence") + " defence" +
+				"\n+" + (int)Levelhandler.GetStat(level, "Summons") + " sentry & minion slots";
+			}
+			else if (type == (int)ItemType.Wings)
+			{
+				stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
+				if (Levelhandler.doWingUpgrade)
+				{
+					stats += "\n+" + (Levelhandler.GetStat(level, "WingPower") * Levelhandler.wingMulti) + "% Vertical & Horizontal wing speed";
+				}
+			}
+			else if (type == (int)ItemType.Accessory)
+			{
+				stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
+			}
+			lines.Add( new(Mod, "UpgradePlusLevel", "Level " + level + " : " + ((ItemType)type).ToString()) { OverrideColor = cappedTitle } );
+			lines.Add( new(Mod, "UpgradePlusStats", stats) { OverrideColor = cappedStats } );
+			return lines;
+		}
+
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
 		{
 			if (!item.social && level > 0)
 			{
-				Color cappedTitle = ItemRarity.GetColor(ItemRarityID.LightRed);
-				Color cappedStats = ItemRarity.GetColor(ItemRarityID.Green);
-				if (level >= Levelhandler.tierCap)
-				{
-					cappedTitle = Main.DiscoColor;
-					cappedStats = ItemRarity.GetColor(ItemRarityID.Quest);
-				}
-
-				int type = Levelhandler.GetItemType(item);
-				string stats = "";
-				TooltipLine line1 = new(Mod, "UpgradePlusLevel", "Level " + level + " : " + ((ItemType)type).ToString()) { OverrideColor = cappedTitle };
-				tooltips.Add(line1);
-				if (type == (int)ItemType.Weapon)
-				{
-					stats +=
-						(int)((Levelhandler.GetStat(level, "Damage") * 100)+100) + "% damage";
-						if (Levelhandler.doCritDamage)
-						{
-							stats += " / " + (2 + Levelhandler.GetStat(level, "CritDamage")) + "X Crits";
-						}
-						stats += "\n";
-						if (Levelhandler.doWeaponSize)
-						{
-							stats += (Levelhandler.GetStat(level, "Size") + 1) + "X Size / ";
-						}
-						stats += (1 + Levelhandler.GetStat(level, "Speed")) + "X Firerate" +
-						"\n+" + Levelhandler.GetStat(level, "CritChance") + "% critical chance";
-						if (Levelhandler.doKnockback)
-						{
-							stats += "\n" + (int)((Levelhandler.GetStat(level, "Knockback") * Levelhandler.KBMulti) + 100) + "% knockback";
-						}
-						if (item.shoot > ProjectileID.None)
-						{
-							stats += "\n" + (Levelhandler.GetStat(level, "Velocity")*Levelhandler.velMulti + 100) + "% velocity";
-						}
-						if (item.mana > 0)
-						{
-							stats += "\n-" + Levelhandler.GetStat(level, "ManaCost") + "% mana cost";
-						}
-				}
-				else if (type == (int)ItemType.Armor)
-				{
-					stats += Levelhandler.GetStat(level, "Defence") + " defence" +
-					"\n+" + (int)Levelhandler.GetStat(level, "Summons") + " sentry & minion slots";
-				}
-				else if (type == (int)ItemType.Wings)
-				{
-					stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
-					if (Levelhandler.doWingUpgrade)
-                    {
-						stats += "\n+" + (Levelhandler.GetStat(level, "WingPower") * Levelhandler.wingMulti) + "% Vertical & Horizontal wing speed";
-					}
-				}
-				else if (type == (int)ItemType.Accessory)
-				{
-					stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
-				}
-				TooltipLine line2 = new(Mod, "UpgradePlusStats", stats) { OverrideColor = cappedStats };
-				tooltips.Add(line2);
+				tooltips.AddRange(GetNewTooltip(item));
 			}
 		}
 		
@@ -138,7 +144,7 @@ namespace UpgradePlus.Globals
 		}
         public override float UseSpeedMultiplier(Item item, Player player)
         {
-			return (level > 0) ? 1f + Levelhandler.GetStat(level, "Speed") : 1f;
+			return (level > 0) ? (Levelhandler.GetStat(level, "Speed") * Levelhandler.speedMulti * 0.01f) + 1f : 1f;
 		}
 
         public override void UpdateEquip(Item item, Player player)

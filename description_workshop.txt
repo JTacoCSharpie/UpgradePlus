@@ -28,9 +28,10 @@ Reforged gear will have it's tokens refunded at standard rates (90% returned) to
 * Now tracks tokens spent per player
 
 -[b]Changelog[/b]->
-1.0.3 - 1.0.4 Release:
+1.0.3 - 1.0.5 Release:
 * Updated Homepage
 * Bugfix with projectiles that can't get their lvl
+* Added weapon speed config
 
 1.0.2 Release:
 * Updated for 1.4

@@ -43,6 +43,14 @@ namespace UpgradePlus
         [DefaultValue(100)]
         [Slider]
             public int wingMulti;
+        [Label("+Weapon Speed Effectiveness")]
+        [Tooltip("Change the power of Weapon Speed upgrades by X%. Default: 100%")]
+        [Increment(5)]
+        [Range(0, 100)]
+        [DefaultValue(100)]
+        [Slider]
+            public int speedMulti;
+
 
         [Header("Disable Features")]
         [Label("Weapon size upgrades")]
@@ -72,6 +80,7 @@ namespace UpgradePlus
             Levelhandler.setReuse = setReuse;
             Levelhandler.doClientRefunds = doClientRefunds;
 
+            Levelhandler.speedMulti = speedMulti;
             Levelhandler.velMulti = velocityMulti;
             Levelhandler.KBMulti = knockbackMulti;
             Levelhandler.wingMulti = wingMulti;

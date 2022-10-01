@@ -29,6 +29,7 @@ namespace UpgradePlus
         public static bool setReuse;
         public static int reuseLevel;
 
+        public static int speedMulti;
         public static int velMulti;
         public static int KBMulti;
         public static int wingMulti;
@@ -39,6 +40,7 @@ namespace UpgradePlus
         public static bool doWingUpgrade;
 
         public static bool doDebug;
+
 
         public static int GetItemType(Item item)
         {

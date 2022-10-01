@@ -53,10 +53,11 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 
 [/SPOILER]
 [SPOILER="Changelog"]
-1.0.3 - 1.0.4 Hotfixes:
+1.0.3 - 1.0.5 Hotfixes:
 [LIST]
 [*]Updated Homepage
 [*]Bugfix with projectiles that can't get their lvl
+[*]Added weapon speed config
 [/LIST]
 1.0.2 1.4 Port Update:
 [LIST]

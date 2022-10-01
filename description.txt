@@ -37,9 +37,10 @@ standard rates (90% returned) to prevent mishaps.
 
 
 --Changelog--
-1.0.3 - 1.0.4 Release:
+1.0.3 - 1.0.5 Release:
 * Updated Homepage
 * Bugfix with projectiles that can't get their lvl
+* Added weapon speed config
 
 1.0.2 Release:
 * Updated for 1.4

@@ -8,6 +8,11 @@ namespace UpgradePlus.Items
 {
 	public class UpgradeToken : ModItem
 	{
+		public override string Texture
+		{
+			get { return "UpgradePlus/Items/UpgradeToken" + ModContent.GetInstance<Client>().artStyle; }
+		}
+
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Upgrade Token");

@@ -29,15 +29,15 @@ namespace UpgradePlus.Globals
         {
 			defaultDefence = item.defense;
 		}
-		public override bool PreReforge(Item item) // Refund items when calamity is enabled
+        /*public override bool PreReforge(Item item) // Refund items when Calamity breaks again
 		{
 			if (ModLoader.HasMod("CalamityMod") && level > 0)
 			{
 				Levelhandler.Refund(item);
 			}
 			return true;
-		}
-		public override GlobalItem Clone(Item item, Item itemClone)
+		}*/
+        public override GlobalItem Clone(Item item, Item itemClone)
 		{
 			ItemLevelHooks myClone = (ItemLevelHooks)base.Clone(item, itemClone);
 			myClone.level = level;
@@ -335,8 +335,8 @@ namespace UpgradePlus.Globals
 					int critChance = projectile.CritChance;
 					if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server)
 					{
-						Main.NewText("Crit chance is supposedly: " + critChance + "% with " + critMulti + "+1 total Crit DMG Multiplier and is " + projectile.DamageType.DisplayName);
-						Main.NewText("Minion=" + projectile.minion + " / Sentry=" + projectile.sentry);
+						Main.NewText("Crit chance is supposedly: " + critChance + "% with " + critMulti + "+2 times damage on crits and is " + projectile.DamageType.DisplayName);
+						Main.NewText("Minion: " + projectile.minion + " / Sentry: " + projectile.sentry);
 					}
 					critChance -= 100; // Remove beginning crit's chance
 					if (critChance > 0) // Begin extra crit rolls
@@ -352,7 +352,7 @@ namespace UpgradePlus.Globals
 								if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server) 
 								{
 									i++;
-									Main.NewText(critChance + "% crit chance & " + damage + " damage after rollover #" + i);
+									Main.NewText("> " + critChance + "% crit chance & " + damage + " damage after rollover #" + i);
 								}
 							}
 							else // If we fail a crit

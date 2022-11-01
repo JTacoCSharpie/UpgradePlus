@@ -58,6 +58,8 @@ namespace UpgradePlus.Npcs
 				.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike)
 			;
 		}
+        public override string HeadTexture => ("UpgradePlus/Npcs/Blacksmith_Head" + ModContent.GetInstance<Client>().artStyle);
+        public override string Texture{ get { return "UpgradePlus/Npcs/Blacksmith" + ModContent.GetInstance<Client>().artStyle; } }
 
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -100,7 +102,7 @@ namespace UpgradePlus.Npcs
 		}
 		public override List<string> SetNPCNameList()
 		{
-			List<string> names = new(){ "Ketsuban", "Hayato", "Jeff", "Doug", "Hugh", "Derf", "Sam", "Peter", "Bartholomew", "Adam", "Sprout", "Jeb!", "ZZAZZ", "Bobby" };
+			List<string> names = new(){ "Ketsuban", "Hayato", "Jeff", "Doug", "Hugh", "Derf", "Sam", "Peter", "Bartholomew", "Adam", "Sprout", "Jeb!", "ZZAZZ", "Bobby", "Luso" };
 			return names;
 		}
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
@@ -137,11 +139,11 @@ namespace UpgradePlus.Npcs
 			{
 				"Turn your KO cannons into Killer Cannons.",
 				"Upgrade your bee gun to see all your enemies begone.",
-				"Some of my finest works could dig hundreds of meters in seconds with the right ammo. No I didn't bring any of them with me.",
+				"Need help purifying evil? Upgrade your launchers and switch to hellfire.",
 				"Don't you hate it when people don't finish their",
 				"How far could a fargo go if a fargo could go far?",
 				"I keep hearing awful stories about \"shoebox\" houses.",
-				"Don't be ridiculous, these tokens hoarded by powerful creatures have no value outside of giving them to me.",
+				"Don't be ridiculous, these tokens hoarded by strong enemies have no value outside of giving them to me.",
 				"So what's got you all dolled up today?",
 				"You know, as our landlord you're obligated to have more fire extinquishers around here.",
 				"Violence is never the answer, it's always the question, and the answer is yes.",

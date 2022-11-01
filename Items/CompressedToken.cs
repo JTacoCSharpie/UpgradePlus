@@ -8,6 +8,11 @@ namespace UpgradePlus.Items
 {
 	public class CompressedToken : ModItem
 	{
+		public override string Texture
+		{
+			get { return "UpgradePlus/Items/CompressedToken" + ModContent.GetInstance<Client>().artStyle; }
+		}
+
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Upgrade Token Sleeve");

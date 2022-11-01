@@ -11,8 +11,6 @@ The Blacksmith is a TownNPC available after beating Eoc, EoW, or BoC. Fight boss
 * QoL: Right click to max & token sleeves automatically convert to tokens during purchases
 
 ## Known Bugs & Issues
-* Calamity removes levels when reforging (goblin tinkerer)  
-Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
 * Mana cost isn't updated in item descriptions (tML bug)
 * Speed upgrades don't effect mining speeds (tML bug)
 * The upgrade slot shows a ¹ in the corner because it's an inventory slot internally

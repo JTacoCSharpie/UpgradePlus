@@ -17,9 +17,7 @@ Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range 
 * [spoiler]1 instanced GlobalItem, 1 instanced ModPlayer, 1 instanced GlobalProjectile[/spoiler]
 
 -[b]Known Issues[/b]->
-[list][*] Calamity removes levels when reforging (goblin tinkerer).
-Reforged gear will have it's tokens refunded at standard rates (90% returned) to prevent mishaps.
-[*] The upgrade slot shows a 1 in the corner
+[list][*] The upgrade slot shows a 1 in the corner
 [*] Mana cost isn't updated in item descriptions (tML bug)
 [*] Speed upgrades don't effect mining speeds (tML bug)[/list]
 
@@ -28,6 +26,10 @@ Reforged gear will have it's tokens refunded at standard rates (90% returned) to
 * Now tracks tokens spent per player
 
 -[b]Changelog[/b]->
+1.0.6 Release:
+* Added alt & improved sprites by Kifirer
+* Re-enabled goblin tinkerer reforges with Calamity enabled
+
 1.0.3 - 1.0.5 Release:
 * Updated Homepage
 * Bugfix with projectiles that can't get their lvl

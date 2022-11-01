@@ -28,15 +28,16 @@ Any Boss or NPC above 1k HP drops tokens based on
 maxHP+Atk+Def. Boosted in HM + further in postML.
 
 --Known Issues--
-* Calamity removes levels when reforging (goblin).
-Reforged gear will have it's tokens refunded at 
-standard rates (90% returned) to prevent mishaps.
 * The upgrade slot shows a 1 in the corner
 * Mana cost isn't updated in item descriptions
 * Speed upgrades don't effect mining speeds
 
 
 --Changelog--
+1.0.6 Release:
+* Added alt & improved sprites by Kifirer
+* Re-enabled goblin reforges with Calamity enabled
+
 1.0.3 - 1.0.5 Release:
 * Updated Homepage
 * Bugfix with projectiles that can't get their lvl

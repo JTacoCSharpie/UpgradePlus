@@ -66,7 +66,15 @@ namespace UpgradePlus
         [DefaultValue(true)]
             public bool doWingUpgrade;
 
-        [Header("Debug")]
+        [Header("Misc")]
+        [ReloadRequired]
+        [Label("Alt Sprites")]
+        [Tooltip("Requires Reload\n0: Default\n1: Kifirer")]
+        [Increment(1)]
+        [Range(0,1)]
+        [DefaultValue(1)]
+        [Slider]
+            public int artStyle;
         [Label("Crit Rollover: Say extended projectile details OnHit in chat")]
         [DefaultValue(false)]
             public bool doDebug;

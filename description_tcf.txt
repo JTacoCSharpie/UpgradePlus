@@ -52,6 +52,11 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 
 [/SPOILER]
 [SPOILER="Changelog"]
+1.0.7 Localization Update:
+[LIST]
+[*]Almost all text now supports localization
+[*]Blacksmith MSG buffer: repeats lines less often
+[/LIST]
 1.0.6 Update:
 [LIST]
 [*]Added alt & improved sprites by Kifirer

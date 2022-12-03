@@ -2,11 +2,12 @@
 
 Fight bosses and strong mobs to get tokens you can trade to upgrade your gear - Take your favorite weapons deeper into the game, grind past difficult bosses and level gear to ridiculous heights.
 
--[b]Features[/b]->
-[list][*] Directly Upgrade Weapons, Wings, Armor & Accessories
+-[b]Features[/b]-> [list]
+[*] Directly Upgrade Weapons, Wings, Armor & Accessories
 [*] Configs: Crit Rollover, 3 stat balance presets, configurable weapon autofire, stat bonus tuning, and slightly more!
 [*] New Stats: Bonus Crit Damage & Wing Speed upgrades
-[*] QoL: Slot remembers favorite status & right click to max level, sleeves convert to tokens automatically[/list]
+[*] QoL: Slot remembers favorite status & right click to max level, sleeves convert to tokens automatically
+[/list]
 
 -[b]Getting Started[/b]->
 The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil boss is defeated. Talk to him to trade tokens and token sleeves from your inventory to upgrade gear. 
@@ -16,16 +17,21 @@ Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range 
 * 1 TownNPC, 2 Items
 * [spoiler]1 instanced GlobalItem, 1 instanced ModPlayer, 1 instanced GlobalProjectile[/spoiler]
 
--[b]Known Issues[/b]->
-[list][*] The upgrade slot shows a 1 in the corner
+-[b]Known Issues[/b]-> [list]
+[*] The upgrade slot shows a 1 in the corner
 [*] Mana cost isn't updated in item descriptions (tML bug)
-[*] Speed upgrades don't effect mining speeds (tML bug)[/list]
+[*] Speed upgrades don't effect mining speeds (tML bug)
+[/list]
 
 -[b]New in 1.4[/b]->
 * Bestiary Info & Blacksmith NPC happiness
 * Now tracks tokens spent per player
 
 -[b]Changelog[/b]->
+1.0.7 Release:
+* Almost all text now supports localization
+* Blacksmith MSG buffer: repeats lines less often
+
 1.0.6 Release:
 * Added alt & improved sprites by Kifirer
 * Re-enabled goblin tinkerer reforges with Calamity enabled

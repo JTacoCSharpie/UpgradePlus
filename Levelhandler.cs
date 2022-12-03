@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 
 namespace UpgradePlus
 {
@@ -13,6 +11,20 @@ namespace UpgradePlus
         Accessory,
         Wings,
         Armor,
+    }
+    public enum Stat
+    {
+        Damage,
+        Speed,
+        CritChance,
+        CritDamage,
+        Size,
+        Knockback,
+        Velocity,
+        ManaCost,
+        WingPower,
+        Defence,
+        Summons
     }
 
     class Levelhandler
@@ -29,18 +41,15 @@ namespace UpgradePlus
         public static bool setReuse;
         public static int reuseLevel;
 
+        public static int sizeMulti;
         public static int speedMulti;
         public static int velMulti;
         public static int KBMulti;
         public static int wingMulti;
 
-        public static bool doWeaponSize;
-        public static bool doKnockback;
         public static bool doCritDamage;
-        public static bool doWingUpgrade;
 
         public static bool doDebug;
-
 
         public static int GetItemType(Item item)
         {
@@ -235,61 +244,62 @@ namespace UpgradePlus
         /// <para>Acceptable values are as follows: </para>
         /// <br>Damage, Speed, CritChance, CritDamage, Size, Knockback </br>
         /// <br>Velocity, ManaCost, WingPower, Defence, Summon</br> </summary>
-        public static float GetStat(int level, string statType)
+        public static float GetStat(int level, Stat statType)
         {
+            /* Values corresponding to stats:
+             * Damage: total *= value
+             * Speed: useTime *= 1+value
+             * Crit: total += CritChance
+             * CritDamage: 2(base) + crit damage
+             * Size: scale = base + size
+             * Knockback: base *= 1 + knockback
+             * Velocity: velocity *= 1 + velocity
+             * ManaCost: final mana cost minus flat ManaCost%
+             * WingSpeed: base * wingPower
+             * Defence: +flat defence
+             * Summons: +flat summons (rounded down to nearest number by int casting) */
             float ret = new();
             if (formula == 0) // OP
             {
-                ret = (statType == "Damage") ? (0.4f * level) : ret;
-                ret = (statType == "Speed") ? Math.Min((0.1f * level), 4) : ret;
-                ret = (statType == "CritChance") ? (2f * level) : ret;
-                ret = (statType == "CritDamage") ? (level * 0.05f * level) : ret;
-                ret = (statType == "Size") ? Math.Min((0.1f * level), 2f) : ret;
-                ret = (statType == "Knockback") ? (0.1f * level) : ret;
-                ret = (statType == "Velocity") ? Math.Min((0.1f * level), 4) : ret;
-                ret = (statType == "ManaCost") ? Math.Min(75, (2 * level)) : ret;
-                ret = (statType == "WingPower") ? Math.Min((0.075f * level), 4) : ret;
-                ret = (statType == "Defence") ? (0.25f * level) : ret;
-                ret = (statType == "Summons") ? (0.025f * level) : ret;
+                ret = (statType == Stat.Damage)        ? (0.4f * level) : ret;
+                ret = (statType == Stat.Speed)         ? Math.Min((0.1f * level), 4) : ret;
+                ret = (statType == Stat.CritChance)    ? (2f * level) : ret;
+                ret = (statType == Stat.CritDamage)    ? (level * 0.05f * level) : ret;
+                ret = (statType == Stat.Size)          ? Math.Min((0.1f * level), 2f) : ret;
+                ret = (statType == Stat.Knockback)     ? (0.1f * level) : ret;
+                ret = (statType == Stat.Velocity)      ? Math.Min((0.1f * level), 4) : ret;
+                ret = (statType == Stat.ManaCost)      ? Math.Min(75, (2 * level)) : ret;
+                ret = (statType == Stat.WingPower)     ? Math.Min((0.075f * level), 4) : ret;
+                ret = (statType == Stat.Defence)       ? (0.25f * level) : ret;
+                ret = (statType == Stat.Summons)       ? (0.025f * level) : ret;
             }
             if (formula == 1) // Balanced
             {
-                // total *= value
-                ret = (statType == "Damage") ? (0.055f * level) : ret;
-                // useTime *= 1+value
-                ret = (statType == "Speed") ? Math.Min((0.025f * level), 3) : ret;
-                // total += CritChance
-                ret = (statType == "CritChance") ? (1f * level) : ret;
-                // crits do 2(base) + crit damage
-                ret = (statType == "CritDamage") ? (0.025f * level) : ret;
-                // scale = base + size
-                ret = (statType == "Size") ? Math.Min((0.05f * level), 1) : ret;
-                // base *= 1 + knockback
-                ret = (statType == "Knockback") ? (0.05f * level) : ret;
-                // velocity *= 1 + velocity
-                ret = (statType == "Velocity") ? Math.Min((0.075f * level), 3) : ret;
-                // final mana cost minus flat ManaCost%
-                ret = (statType == "ManaCost") ? Math.Min(50, (1.5f * level)) : ret;
-                // base * wingPower
-                ret = (statType == "WingPower") ? Math.Min((0.025f * level), 2) : ret;
-                // +flat defence
-                ret = (statType == "Defence") ? (0.1f * level) : ret;
-                // +flat summons (rounded down to nearest number by int casting)
-                ret = (statType == "Summons") ? Math.Min((0.05f * level), 3) : ret;
+                ret = (statType == Stat.Damage)        ? (0.055f * level) : ret;
+                ret = (statType == Stat.Speed)         ? Math.Min((0.025f * level), 3) : ret;
+                ret = (statType == Stat.CritChance)    ? (1f * level) : ret;
+                ret = (statType == Stat.CritDamage)    ? (0.025f * level) : ret;
+                ret = (statType == Stat.Size)          ? Math.Min((0.05f * level), 1) : ret;
+                ret = (statType == Stat.Knockback)     ? (0.05f * level) : ret;
+                ret = (statType == Stat.Velocity)      ? Math.Min((0.075f * level), 3) : ret;
+                ret = (statType == Stat.ManaCost)      ? Math.Min(50, (1.5f * level)) : ret;
+                ret = (statType == Stat.WingPower)     ? Math.Min((0.025f * level), 2) : ret;
+                ret = (statType == Stat.Defence)       ? (0.1f * level) : ret;
+                ret = (statType == Stat.Summons)       ? Math.Min((0.05f * level), 3) : ret;
             }
             if (formula == 2) // Underpowered
             {
-                ret = (statType == "Damage") ? (0.01f * level) : ret;
-                ret = (statType == "Speed") ? Math.Min((0.01f * level), 1) : ret;
-                ret = (statType == "CritChance") ? (0.5f * level) : ret;
-                ret = (statType == "CritDamage") ? 0f : ret;
-                ret = (statType == "Size") ? Math.Min((0.05f * level), 0.5f) : ret;
-                ret = (statType == "Knockback") ? (0.05f * level) : ret;
-                ret = (statType == "Velocity") ? Math.Min((0.1f * level), 2) : ret;
-                ret = (statType == "ManaCost") ? Math.Min(20, (0.5f * level)) : ret;
-                ret = (statType == "WingPower") ? 0f : ret;
-                ret = (statType == "Defence") ? (0.05f * level) : ret;
-                ret = (statType == "Summons") ? 0f : ret;
+                ret = (statType == Stat.Damage)        ? (0.01f * level) : ret;
+                ret = (statType == Stat.Speed)         ? Math.Min((0.01f * level), 1) : ret;
+                ret = (statType == Stat.CritChance)    ? (0.5f * level) : ret;
+                ret = (statType == Stat.CritDamage)    ? 0f : ret;
+                ret = (statType == Stat.Size)          ? Math.Min((0.05f * level), 0.5f) : ret;
+                ret = (statType == Stat.Knockback)     ? (0.025f * level) : ret;
+                ret = (statType == Stat.Velocity)      ? Math.Min((0.1f * level), 2) : ret;
+                ret = (statType == Stat.ManaCost)      ? Math.Min(20, (0.5f * level)) : ret;
+                ret = (statType == Stat.WingPower)     ? 0f : ret;
+                ret = (statType == Stat.Defence)       ? (0.05f * level) : ret;
+                ret = (statType == Stat.Summons)       ? 0f : ret;
             }
             return ret;
         }

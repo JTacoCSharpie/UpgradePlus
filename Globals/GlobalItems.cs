@@ -1,3 +1,4 @@
+using static UpgradePlus.Localization;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -9,7 +10,6 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.UI;
-using System.Collections.ObjectModel;
 
 namespace UpgradePlus.Globals
 {
@@ -57,54 +57,66 @@ namespace UpgradePlus.Globals
 			}
 
 			int type = Levelhandler.GetItemType(item);
-			string stats = "";
+			lines.Add(new(Mod, "UpgradePlusLevel", GetTrans("UI.Tooltips.ItemType." + ((ItemType)type).ToString(), level)) { OverrideColor = cappedTitle });
 			if (type == (int)ItemType.Weapon)
 			{
-				stats +=
-					(int)((Levelhandler.GetStat(level, "Damage") * 100) + 100) + "% damage";
+				string topLayerStats = GetTrans("UI.Tooltips.Damage", (int)((Levelhandler.GetStat(level, Stat.Damage) * 100) + 100));
 				if (Levelhandler.doCritDamage)
 				{
-					stats += " / " + (2 + Levelhandler.GetStat(level, "CritDamage")) + "X Crits";
+					topLayerStats += " / " + GetTrans("UI.Tooltips.CritDamage", TrimTrailingDigits( 2 + Levelhandler.GetStat(level, Stat.CritDamage) ));
 				}
-				stats += "\n";
-				if (Levelhandler.doWeaponSize)
-				{
-					stats += (Levelhandler.GetStat(level, "Size") + 1) + "X Size / ";
+				lines.Add(new(Mod, "UpgradePlusToolTipLayerOne", topLayerStats) { OverrideColor = cappedStats });
+
+				if (Levelhandler.sizeMulti > 0 || Levelhandler.speedMulti > 0)
+                {
+					string layerTwoStats = "";
+					if (Levelhandler.sizeMulti > 0)
+					{
+						layerTwoStats += GetTrans("UI.Tooltips.Size", TrimTrailingDigits( (Levelhandler.GetStat(level, Stat.Size) * Levelhandler.sizeMulti * 0.01f) + 1) );
+						if (Levelhandler.speedMulti > 0)
+						{
+							layerTwoStats += " / ";
+						}
+					}
+					if (Levelhandler.speedMulti > 0)
+					{
+						layerTwoStats += GetTrans("UI.Tooltips.Speed", TrimTrailingDigits( (Levelhandler.GetStat(level, Stat.Speed) * Levelhandler.speedMulti * 0.01f) + 1) );
+					}
+					lines.Add(new(Mod, "UpgradePlusToolTipLayerTwo", layerTwoStats) { OverrideColor = cappedStats });
 				}
-				stats += ((Levelhandler.GetStat(level, "Speed") * Levelhandler.speedMulti * 0.01) + 1) + "X Firerate" +
-				"\n+" + Levelhandler.GetStat(level, "CritChance") + "% critical chance";
-				if (Levelhandler.doKnockback)
+
+				lines.Add(new(Mod, "UpgradePlusToolTipCritChance", GetTrans("UI.Tooltips.CritChance", Levelhandler.GetStat(level, Stat.CritChance)) ) { OverrideColor = cappedStats });
+				if (Levelhandler.KBMulti > 0)
 				{
-					stats += "\n" + (int)((Levelhandler.GetStat(level, "Knockback") * Levelhandler.KBMulti) + 100) + "% knockback";
+					lines.Add(new(Mod, "UpgradePlusToolTipKnockback", GetTrans("UI.Tooltips.Knockback", (int)((Levelhandler.GetStat(level, Stat.Knockback) * Levelhandler.KBMulti) + 100)) ) { OverrideColor = cappedStats });
 				}
-				if (item.shoot > ProjectileID.None)
+				if (Levelhandler.velMulti > 0 && item.shoot > ProjectileID.None)
 				{
-					stats += "\n" + (Levelhandler.GetStat(level, "Velocity") * Levelhandler.velMulti + 100) + "% velocity";
+					lines.Add(new(Mod, "UpgradePlusToolTipVelocity", GetTrans("UI.Tooltips.Velocity", (int)Levelhandler.GetStat(level, Stat.Velocity) * Levelhandler.velMulti + 100) ) { OverrideColor = cappedStats });
 				}
 				if (item.mana > 0)
 				{
-					stats += "\n-" + Levelhandler.GetStat(level, "ManaCost") + "% mana cost";
+					lines.Add(new(Mod, "UpgradePlusToolTipManaCost", GetTrans("UI.Tooltips.ManaCost", Levelhandler.GetStat(level, Stat.ManaCost)) ) { OverrideColor = cappedStats });
 				}
 			}
 			else if (type == (int)ItemType.Armor)
 			{
-				stats += Levelhandler.GetStat(level, "Defence") + " defence" +
-				"\n+" + (int)Levelhandler.GetStat(level, "Summons") + " sentry & minion slots";
+				string armorLines = GetTrans("UI.Tooltips.Defence", Levelhandler.GetStat(level, Stat.Defence)) + "\n" + GetTrans("UI.Tooltips.Summons", (int)Levelhandler.GetStat(level, Stat.Summons));
+				lines.Add(new(Mod, "UpgradePlusToolTipArmorStats", armorLines) { OverrideColor = cappedStats });
 			}
 			else if (type == (int)ItemType.Wings)
 			{
-				stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
-				if (Levelhandler.doWingUpgrade)
+				string wingStats = GetTrans("UI.Tooltips.Defence", Levelhandler.GetStat(level, Stat.Defence));
+				if (Levelhandler.wingMulti > 0)
 				{
-					stats += "\n+" + (Levelhandler.GetStat(level, "WingPower") * Levelhandler.wingMulti) + "% Vertical & Horizontal wing speed";
+					wingStats += "\n" + GetTrans("UI.Tooltips.WingSpeed", Levelhandler.GetStat(level, Stat.WingPower) * Levelhandler.wingMulti);
 				}
+				lines.Add(new(Mod, "UpgradePlusToolTipWingStats", wingStats) { OverrideColor = cappedStats });
 			}
 			else if (type == (int)ItemType.Accessory)
 			{
-				stats += "+" + Levelhandler.GetStat(level, "Defence") + " defence";
+				lines.Add(new(Mod, "UpgradePlusToolTipAccessoryStats", GetTrans("UI.Tooltips.Defence", Levelhandler.GetStat(level, Stat.Defence))) { OverrideColor = cappedStats });
 			}
-			lines.Add( new(Mod, "UpgradePlusLevel", "Level " + level + " : " + ((ItemType)type).ToString()) { OverrideColor = cappedTitle } );
-			lines.Add( new(Mod, "UpgradePlusStats", stats) { OverrideColor = cappedStats } );
 			return lines;
 		}
 
@@ -125,26 +137,26 @@ namespace UpgradePlus.Globals
         {
 			if (level > 0)
 			{
-				velocity *= (1 + (Levelhandler.GetStat(level, "Velocity") * Levelhandler.velMulti * 0.01f));
+				velocity *= (1 + (Levelhandler.GetStat(level, Stat.Velocity) * Levelhandler.velMulti * 0.01f));
 			}
         }
 		public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
 		{
 			if (level > 0)
 			{
-				damage *= 1 + Levelhandler.GetStat(level, "Damage");
+				damage *= 1 + Levelhandler.GetStat(level, Stat.Damage);
 			}
 		}
         public override void ModifyWeaponKnockback(Item item, Player player, ref StatModifier knockback)
 		{
-			if (Levelhandler.doKnockback && level > 0)
+			if (level > 0)
 			{
-				knockback *= 1 + ((Levelhandler.GetStat(level, "Knockback") * Levelhandler.KBMulti) * 0.01f);
+				knockback *= 1 + ((Levelhandler.GetStat(level, Stat.Knockback) * Levelhandler.KBMulti) * 0.01f);
 			}
 		}
         public override float UseSpeedMultiplier(Item item, Player player)
         {
-			return (level > 0) ? (Levelhandler.GetStat(level, "Speed") * Levelhandler.speedMulti * 0.01f) + 1f : 1f;
+			return (level > 0) ? (Levelhandler.GetStat(level, Stat.Speed) * Levelhandler.speedMulti * 0.01f) + 1f : 1f;
 		}
 
         public override void UpdateEquip(Item item, Player player)
@@ -153,10 +165,10 @@ namespace UpgradePlus.Globals
 			{
 				if (Levelhandler.GetItemType(item) == (int)ItemType.Armor)
 				{
-					player.maxTurrets += (int)Levelhandler.GetStat(level, "Summons");
-					player.maxMinions += (int)Levelhandler.GetStat(level, "Summons");
+					player.maxTurrets += (int)Levelhandler.GetStat(level, Stat.Summons);
+					player.maxMinions += (int)Levelhandler.GetStat(level, Stat.Summons);
 				}
-				item.defense = defaultDefence + (int)Levelhandler.GetStat(level, "Defence");
+				item.defense = defaultDefence + (int)Levelhandler.GetStat(level, Stat.Defence);
 			}
 			else
             {
@@ -165,18 +177,18 @@ namespace UpgradePlus.Globals
 		}
 		public override void HorizontalWingSpeeds(Item item, Player player, ref float speed, ref float acceleration)
 		{
-			if (level > 0 && Levelhandler.doWingUpgrade)
+			if (level > 0 && Levelhandler.wingMulti > 0)
 			{
-				float xWingSpeed = 1 + (Levelhandler.GetStat(level, "WingPower") * Levelhandler.wingMulti * 0.01f);
+				float xWingSpeed = 1 + (Levelhandler.GetStat(level, Stat.WingPower) * Levelhandler.wingMulti * 0.01f);
 				speed *= xWingSpeed;
 				acceleration *= xWingSpeed;
 			}
 		}
         public override void VerticalWingSpeeds(Item item, Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
         {
-			if (level > 0 && Levelhandler.doWingUpgrade)
+			if (level > 0 && Levelhandler.wingMulti > 0)
 			{
-				float yWingSpeed = 1 + (Levelhandler.GetStat(level, "WingPower") * Levelhandler.wingMulti * 0.01f);
+				float yWingSpeed = 1 + (Levelhandler.GetStat(level, Stat.WingPower) * Levelhandler.wingMulti * 0.01f);
 				ascentWhenRising *= yWingSpeed;
 				maxCanAscendMultiplier *= yWingSpeed;
 				maxAscentMultiplier *= yWingSpeed;
@@ -186,16 +198,16 @@ namespace UpgradePlus.Globals
 
         public override void ModifyItemScale(Item item, Player player, ref float scale)
         {
-			if (item.pick == 0 && item.hammer == 0 && item.axe == 0 && Levelhandler.doWeaponSize && level > 0)
+			if (item.pick == 0 && item.hammer == 0 && item.axe == 0 && level > 0 && Levelhandler.sizeMulti > 0)
 			{
-				scale += Levelhandler.GetStat(level, "Size");
+				scale += (Levelhandler.GetStat(level, Stat.Size) * Levelhandler.sizeMulti * 0.01f);
 			}
 		}
         public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			if (Levelhandler.doWeaponSize && level > 0)
+			if (level > 0 && Levelhandler.sizeMulti > 0)
             {
-				scale += Levelhandler.GetStat(level, "Size");
+				scale += (Levelhandler.GetStat(level, Stat.Size) * Levelhandler.sizeMulti * 0.01f);
 			}
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
 		}
@@ -218,11 +230,11 @@ namespace UpgradePlus.Globals
 					{
 						if (Main.rand.NextBool((int)Math.Max((100f / chance), 1))) // If we roll a crit
 						{
-							damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * haveLooped) * (2 + Levelhandler.GetStat(lv, "CritDamage"))) : damage * 2; // Either use crit damage, or x2
+							damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * haveLooped) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage * 2; // Either use crit damage, or x2
 						}
 						else // If we fail a crit
 						{
-							damage = (lv > 0 && haveLooped == 0.5f && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, "CritDamage"))) : damage; // Apply damage multi to base crit if we've fail our first rollover, do nothing if we're failing a subsequent
+							damage = (lv > 0 && haveLooped == 0.5f && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage; // Apply damage multi to base crit if we've fail our first rollover, do nothing if we're failing a subsequent
 							keepLooping = false;
 						}
 						chance -= 100;
@@ -231,12 +243,12 @@ namespace UpgradePlus.Globals
 				}
 				else if (lv > 0 && Levelhandler.doCritDamage) // Our remaining chance was lower than 1% but we still need to apply crit damage
 				{
-					damage = (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, "CritDamage")));
+					damage = (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage)));
 				}
 			}
 			else if (crit) // critRollover is disabled
 			{
-				damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, "CritDamage"))) : damage; // Either use crit damage, or don't apply
+				damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage; // Either use crit damage, or don't apply
 			}
 		}
 
@@ -289,11 +301,11 @@ namespace UpgradePlus.Globals
 				if (spawnedFrom.TryGetGlobalItem(out ItemLevelHooks Upgrade))
                 {
 					int level = Upgrade.level;
-					critMulti = Levelhandler.GetStat(level, "CritDamage");
+					critMulti = Levelhandler.GetStat(level, Stat.CritDamage);
 					lvled = (level > 0);
 					if (projectile.minion || projectile.sentry)
 					{
-						minionMulti += Levelhandler.GetStat(level, "Damage");
+						minionMulti += Levelhandler.GetStat(level, Stat.Damage);
 						if (projectile.type == ProjectileID.StormTigerGem && !projectile.npcProj)
 						{
 							Main.player[castedSource.Entity.whoAmI].GetModPlayer<UPPlayer>().tigerBoost = minionMulti;
@@ -335,8 +347,8 @@ namespace UpgradePlus.Globals
 					int critChance = projectile.CritChance;
 					if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server)
 					{
-						Main.NewText("Crit chance is supposedly: " + critChance + "% with " + critMulti + "+2 times damage on crits and is " + projectile.DamageType.DisplayName);
-						Main.NewText("Minion: " + projectile.minion + " / Sentry: " + projectile.sentry);
+						Main.NewText(GetTrans("UI.CritRolloverDebugLine1", critChance, critMulti, projectile.DamageType.DisplayName));
+						Main.NewText(GetTrans("UI.CritRolloverDebugLine2", projectile.minion, projectile.sentry));
 					}
 					critChance -= 100; // Remove beginning crit's chance
 					if (critChance > 0) // Begin extra crit rolls
@@ -352,7 +364,7 @@ namespace UpgradePlus.Globals
 								if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server) 
 								{
 									i++;
-									Main.NewText("> " + critChance + "% crit chance & " + damage + " damage after rollover #" + i);
+									Main.NewText(GetTrans("UI.CritRolloverDebugLoop", critChance, damage, i));
 								}
 							}
 							else // If we fail a crit

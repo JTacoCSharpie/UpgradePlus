@@ -15,8 +15,6 @@ namespace UpgradePlus.Items
 
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Upgrade Token Sleeve");
-			Tooltip.SetDefault("A roll of 32,766 tokens\nJackpot.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
 		}
 

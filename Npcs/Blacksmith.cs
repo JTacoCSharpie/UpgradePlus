@@ -1,3 +1,4 @@
+using static UpgradePlus.Localization;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -5,17 +6,8 @@ using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Microsoft.Xna.Framework;
 using System;
-using System.Linq;
-using Terraria.Audio;
-using Terraria.Localization;
-using Terraria.Utilities;
 using Terraria.GameContent.Bestiary;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
 using Terraria.GameContent.Personalities;
-using Terraria.DataStructures;
-using ReLogic.Content;
-using Terraria.ModLoader.IO;
 
 
 namespace UpgradePlus.Npcs
@@ -26,7 +18,6 @@ namespace UpgradePlus.Npcs
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Blacksmith");
 			Main.npcFrameCount[NPC.type] = 26;
 			NPCID.Sets.ExtraFramesCount[NPC.type] = 6;
 			NPCID.Sets.AttackFrameCount[NPC.type] = 5;
@@ -67,7 +58,7 @@ namespace UpgradePlus.Npcs
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[]
 			{
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-				new FlavorTextBestiaryInfoElement("A no-longer-wandering Blacksmith looking to amass serious financial gains by offering gear upgrades for boss tokens."),
+				new FlavorTextBestiaryInfoElement( GetTrans("BlacksmithNPC.BestiaryBlurb") ),
 			});
 		}
 
@@ -132,86 +123,109 @@ namespace UpgradePlus.Npcs
 			randomOffset = -1f; // Random Offset
 		}
 
+		/// <summary> Loops over "Mods.UpgradePlus."+partialPath+"Line"+i so the destination is expected to have Line0 and onward contained </summary>
+		private List<string> GetMultiLinesAtPath(string partialPath)
+        {
+			List<string> lines = new();
+			for (int i = 0; i < 100; i++)
+            {
+				if (GetTrans(partialPath + ".Line" + i) != "Mods.UpgradePlus."+partialPath+".Line"+i) // If our output is the same as our input then we've hit an invalid localization key
+                {
+					lines.Add(GetTrans(partialPath + ".Line" + i));
+				}
+				else // We used invalid localization keys as a stopping point so I can be lazy and not hardcode the loop stops
+                {
+					if (i == 0 && Main.netMode != NetmodeID.Server)
+					{ Main.NewText("Please report an error with localization: ["+partialPath+"] to ths UpgradePlus dev"); }
+					break;
+                }
+			}
+			return lines;
+        }
+
+		public List<string> recentDialogue = new();
 		public override string GetChat()
 		{
 			double spent = Main.LocalPlayer.GetModPlayer<UPPlayer>().SpentTokens;
-			List<string> nonconditionals = new()
-			{
-				"Turn your KO cannons into Killer Cannons.",
-				"Upgrade your bee gun to see all your enemies begone.",
-				"Need help purifying evil? Upgrade your launchers and switch to hellfire.",
-				"Don't you hate it when people don't finish their",
-				"How far could a fargo go if a fargo could go far?",
-				"I keep hearing awful stories about \"shoebox\" houses.",
-				"Don't be ridiculous, these tokens hoarded by strong enemies have no value outside of giving them to me.",
-				"So what's got you all dolled up today?",
-				"You know, as our landlord you're obligated to have more fire extinquishers around here.",
-				"Violence is never the answer, it's always the question, and the answer is yes.",
-				"I got my technique from a guy in a blue cap, real nice guy but whenever I asked his name he'd always reply \"Upyours\".",
-				"Quick, the secret formula for crafting upgrade tokens is-",
-				"Why in the world are there so many gold critters? Was there an explosion in a flask factory?",
-				"Can you check if the Travelling Merchant sells girlscout cookies next time you see him?",
-				"I'd say my favorite hobby is spreading misinformation, but that'd be a lie.",
-				"I've heard of a cultist that holds the legendary artifact of Dee.",
-				"Bonjour, afrikan.",
-				"no",
-		};
-
-			// Mod messages
+			List<string> nonconditionals = new();
 			List<string> condLines = new();
-			string[] potentialJobs = { "at the PD.", "at the deli", "in the fire department", "as a life guard", "as a plumber", "as a streamer", "as a vtuber" };
+
+			// Standard Dialogue
+			nonconditionals.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.StandardLines") );
+
+
+			// Modded Messages
 			if (ModLoader.HasMod("CalamityMod"))
             {
-				condLines.Add("You run Yharim for his foams yet?");
-				condLines.Add("The only thing calamitous around here is your fashion sense.");
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity") );
 				Mod Calamity = ModLoader.GetMod("CalamityMod");
 				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("FAP").Type) > 0)
                 {
-					condLines.Add("Cirrus scares me. I dared her to drink a bucket of lava and she looked me dead in the eye 'n started chugging.");
+					condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.DrunkPrincessExists") );
 				}
 				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("WITCH").Type) > 0)
                 {
-					condLines.Add("I hear calamitas got a job working " + Main.rand.Next(potentialJobs) + " to pay rent the other day");
+					List<string> potentialJobs = GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.CalamitasJobs");
+					condLines.Add( GetTrans("BlacksmithNPC.Dialogue.Calamity.CalamitasExists", Main.rand.Next(potentialJobs)) );
 				}
 			}
 			if (ModLoader.HasMod("UpgradeEquipment") || ModLoader.HasMod("UpgradeEquipment_hrr"))
             {
-				condLines.Add("So what if my prices are high? What are you going to do, find another equipment upgrader?");
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.UpgradeMods") );
 			}
 
-			// Conditional vanilla messages
+			// Conditional Vanilla Messages
 			if (NPC.FindFirstNPC(NPCID.TaxCollector) < 0)
 			{
-				condLines.Add("Living in your head, rent free.");
-				condLines.Add("Taxes evaded, my truth goes unstated, living in your head rent freee~");
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NoTaxes") );
 			}
 			else
 			{
-				condLines.Add("10% off your next upgrade if you lower my rent.");
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Taxes") );
 			}
 			if (Main.dayTime)
             {
-				condLines.Add("Hey go kill some more blue slimes, I need to craft some sticky pistons.");
-            }
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.DayLines") );
+			}
 			else
             {
-				condLines.Add("Where do all these zombies keep coming from?");
-				condLines.Add("My prices may be high but the sun is not. Upgrade or perish.");
-            }
+				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NightLines") );
+			}
 			if (spent > 1)
             {
-				condLines.Add("I checked the numbers and you've spent " + String.Format("{0:n0}", spent) + " tokens on upgrades, that's " + String.Format("{0:n0}", Math.Floor((spent + 1) / (short.MaxValue - 1))) + " full sleeves of tokens.");
+				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.SpentTokens", String.Format("{0:n0}", spent), String.Format("{0:n0}", Math.Floor((spent + 1) / (short.MaxValue - 1))) ));
             }
 
+			string MSG = "Wow, you found a secret message! The error message. Either the mod itself or an interaction with another mod has lead to this error :thumbsup:";
 			int category = Main.rand.Next(10);
-			if (category > 1) // 8 in 10 chance
+
+			for (int i = 0; i < 10; i++)
             {
-				return Main.rand.Next(nonconditionals);
-            }
-			else
-			{
-				return Main.rand.Next(condLines);
+				if (category > 1)
+                {
+					MSG = Main.rand.Next(nonconditionals);
+				}
+				else
+                {
+					MSG = Main.rand.Next(condLines);
+				}
+
+				if (recentDialogue.Contains(MSG))
+                {
+					continue;
+                }
+				else
+                {
+					recentDialogue.Add(MSG);
+					if (recentDialogue.Count > 12)
+                    {
+						recentDialogue.RemoveAt(0);
+					}
+					break;
+                }
 			}
+			return MSG;
+
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -225,7 +239,7 @@ namespace UpgradePlus.Npcs
 		}
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
-			button =  "Upgrade Gear";
+			button = GetTrans("BlacksmithNPC.UpgradeButtonBlurb");
 		}
 	}
 }

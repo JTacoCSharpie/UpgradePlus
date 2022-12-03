@@ -27,7 +27,7 @@ namespace UpgradePlus
             item.TryGetGlobalItem(out Globals.ItemLevelHooks hook);
             if (hook != null)
             {
-				crit += (hook.level > 0) ? (int)Levelhandler.GetStat(hook.level, "CritChance") : 0;
+				crit += (hook.level > 0) ? (int)Levelhandler.GetStat(hook.level, Stat.CritChance) : 0;
 			}			
 	    }
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
@@ -35,7 +35,7 @@ namespace UpgradePlus
             item.TryGetGlobalItem(out Globals.ItemLevelHooks hook);
             if (hook != null)
             {
-                mult *= (hook.level > 0) ? (1 - (Levelhandler.GetStat(hook.level, "ManaCost") / 100)) : 1;
+                mult *= (hook.level > 0) ? (1 - (Levelhandler.GetStat(hook.level, Stat.ManaCost) / 100)) : 1;
             }
 		}
 

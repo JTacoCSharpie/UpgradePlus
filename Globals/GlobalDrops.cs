@@ -1,8 +1,6 @@
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace UpgradePlus.Globals
 {

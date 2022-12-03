@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
-
 namespace UpgradePlus.Items
 {
 	public class UpgradeToken : ModItem
@@ -15,8 +14,6 @@ namespace UpgradePlus.Items
 
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Upgrade Token");
-			Tooltip.SetDefault("It's a cheap plastic disc\nIt says \"Made in China\" on the back");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 

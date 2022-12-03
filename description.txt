@@ -34,6 +34,10 @@ maxHP+Atk+Def. Boosted in HM + further in postML.
 
 
 --Changelog--
+1.0.7 Release:
+* Almost all text now supports localization
+* Blacksmith MSG buffer: repeats lines less often
+
 1.0.6 Release:
 * Added alt & improved sprites by Kifirer
 * Re-enabled goblin reforges with Calamity enabled

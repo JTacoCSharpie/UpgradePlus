@@ -3,83 +3,77 @@ using System.ComponentModel;
 
 namespace UpgradePlus
 {
+
+    [Label("$Mods.UpgradePlus.Configs.ClientClassName")]
     public class Client : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Header("Core Features")]
-        [Label("Upgrades also increase crit damage")]
-        [Tooltip("Stacks with crit rollover. Default: Enabled")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.CoreFeatures")]
+        [Label("$Mods.UpgradePlus.Configs.CritDamage")]
+        [Tooltip("$Mods.UpgradePlus.Configs.CritDamageDesc")]
         [DefaultValue(true)]
             public bool doCritDamage;
-        [Label("Items autofire at level threshold")]
-        [Tooltip("Upgraded items auto-reuse at & above configurable level.\nDefault: Disabled for Authentic modded experience but Recommended QoL.")]
+        [Label("$Mods.UpgradePlus.Configs.DoAutofire")]
+        [Tooltip("$Mods.UpgradePlus.Configs.DoAutofireDesc")]
         [DefaultValue(false)]
             public bool setReuse;
-        [Label("Allow refunding Levels")]
-        [Tooltip("Default: Enabled")]
+        [Label("$Mods.UpgradePlus.Configs.RefundLevels")]
+        [Tooltip("$Mods.UpgradePlus.Configs.RefundLevelsDesc")]
         [DefaultValue(true)]
             public bool doClientRefunds;
 
-        [Header("Tune Features")]
-        [Label("+Knockback Effectiveness")]
-        [Tooltip("Change the power of Knockback upgrades by X%. Default: 100%")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.TuneFeatures")]
+        [Label("$Mods.UpgradePlus.Configs.SizeEff")]
+        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
         [Increment(5)]
-        [Range(0, 200)]
+        [Range(0, 100)]
         [DefaultValue(100)]
         [Slider]
-            public int knockbackMulti;
-        [Label("+Velocity Effectiveness")]
-        [Tooltip("Change the power of Velocity upgrades by X%. Default: 100%")]
+            public int sizeMulti;
+        [Label("$Mods.UpgradePlus.Configs.VelEff")]
+        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
         [Increment(5)]
         [Range(0, 200)]
         [DefaultValue(100)]
         [Slider]
             public int velocityMulti;
-        [Label("+Wing Speed Effectiveness")]
-        [Tooltip("Change the power of Wing upgrades by X%. Default: 100%")]
+        [Label("$Mods.UpgradePlus.Configs.KBEff")]
+        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
         [Increment(5)]
         [Range(0, 200)]
         [DefaultValue(100)]
         [Slider]
-            public int wingMulti;
-        [Label("+Weapon Speed Effectiveness")]
-        [Tooltip("Change the power of Weapon Speed upgrades by X%. Default: 100%")]
+            public int knockbackMulti;
+        [Label("$Mods.UpgradePlus.Configs.SpeedEff")]
+        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
         [Increment(5)]
         [Range(0, 100)]
         [DefaultValue(100)]
         [Slider]
             public int speedMulti;
+        [Label("$Mods.UpgradePlus.Configs.WingEff")]
+        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        [Increment(5)]
+        [Range(0, 200)]
+        [DefaultValue(100)]
+        [Slider]
+            public int wingMulti;
 
-
-        [Header("Disable Features")]
-        [Label("Weapon size upgrades")]
-        [Tooltip("Default: Enabled")]
-        [DefaultValue(true)]
-            public bool doSizeUpgrade;
-        [Label("Weapon knockback upgrades")]
-        [Tooltip("Default: Enabled")]
-        [DefaultValue(true)]
-            public bool doKBUpgrade;
-        [Label("Wing speed upgrades")]
-        [Tooltip("Default: Enabled")]
-        [DefaultValue(true)]
-            public bool doWingUpgrade;
-
-        [Header("Misc")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.Misc")]
         [ReloadRequired]
-        [Label("Alt Sprites")]
-        [Tooltip("Requires Reload\n0: Default\n1: Kifirer")]
+        [Label("$Mods.UpgradePlus.Configs.AltSprites")]
+        [Tooltip("$Mods.UpgradePlus.Configs.AltSpritesDesc")]
         [Increment(1)]
         [Range(0,1)]
-        [DefaultValue(1)]
+        [DefaultValue(0)]
         [Slider]
             public int artStyle;
-        [Label("Crit Rollover: Say extended projectile details OnHit in chat")]
+        [Label("$Mods.UpgradePlus.Configs.CritRolloverDebug")]
         [DefaultValue(false)]
             public bool doDebug;
 
-        [Header("See next page for more options")]
+        [Header("$Mods.UpgradePlus.Configs.NextPage")]
             public bool ThisOptionDoesNothingButItdBeFunnyIfItSecretlyRecordedWhoActivatesItInSomeSortOfMassSocialExperimentTooBadItsJustAHeader;
 
         public override void OnChanged()
@@ -88,69 +82,68 @@ namespace UpgradePlus
             Levelhandler.setReuse = setReuse;
             Levelhandler.doClientRefunds = doClientRefunds;
 
-            Levelhandler.speedMulti = speedMulti;
             Levelhandler.velMulti = velocityMulti;
             Levelhandler.KBMulti = knockbackMulti;
+            Levelhandler.sizeMulti = sizeMulti;
+            Levelhandler.speedMulti = speedMulti;
             Levelhandler.wingMulti = wingMulti;
-            Levelhandler.doWeaponSize = doSizeUpgrade;
-            Levelhandler.doKnockback = doKBUpgrade;
-            Levelhandler.doWingUpgrade = doWingUpgrade;
 
             Levelhandler.doDebug = doDebug;
         }
     }
 
+    [Label("$Mods.UpgradePlus.Configs.ServerClassName")]
     [BackgroundColor(30, 15, 15, 150)]
     public class Server : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
-        [Header("Core Features")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.CoreFeatures")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Change maximum upgrade cap.")]
-        [Tooltip("Default: 40")]
+        [Label("$Mods.UpgradePlus.Configs.LevelCap")]
+        [Tooltip("$Mods.UpgradePlus.Configs.LevelCapDesc")]
         [Increment(5)]
         [Range(20, 255)]
         [DefaultValue(40)]
             public int tierCap;
 
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Stat Balance")]
-        [Tooltip("0. Overpowered\n1. Default\n2. Underpowered - Some stat's don't apply")]
+        [Label("$Mods.UpgradePlus.Configs.StatBalance")]
+        [Tooltip("$Mods.UpgradePlus.Configs.StatBalanceDesc")]
         [Range(0, 2)]
         [DefaultValue(1)]
         [Slider]
             public int statFormulaModel;
 
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Cap upgrades at 20 until hardmode?")]
-        [Tooltip("Default: Enabled - Recommended Enabled")]
+        [Label("$Mods.UpgradePlus.Configs.HardmodeCap")]
+        [Tooltip("$Mods.UpgradePlus.Configs.HardmodeCapDesc")]
         [DefaultValue(true)]
             public bool doHardmodeCaps;
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Let players refund Levels")]
-        [Tooltip("Serverside Override - Default: Enabled")]
+        [Label("$Mods.UpgradePlus.Configs.RefundOverride")]
+        [Tooltip("$Mods.UpgradePlus.Configs.RefundOverrideDesc")]
         [DefaultValue(true)]
             public bool doServerRefunds;
 
-        [Header("Tune Features")]
-        [Label("Autofire Threshold")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.TuneFeatures")]
+        [Label("$Mods.UpgradePlus.Configs.Autofire")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Tooltip("Change the level force autofire applies at if enabled - Default: 20\n0 makes all items autofire - 256 disables it for all players")]
+        [Tooltip("$Mods.UpgradePlus.Configs.AutofireDesc")]
         [Increment(5)]
         [Range(0, 256)]
         [DefaultValue(20)]
             public int reuseLevel;
 
-        [Header("Fun Jank")]
+        [Header("$Mods.UpgradePlus.Configs.Shared.Fun")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Crit chance past 100% rolls into additional crits")]
-        [Tooltip("E.G: 130% crit = Default crit with a 30% chance of doing 4x. Default: Disabled\nIf you're having damage numbers of only 2 pop up, try disabling this first.")]
+        [Label("$Mods.UpgradePlus.Configs.CritRollover")]
+        [Tooltip("$Mods.UpgradePlus.Configs.CritRolloverDesc")]
         [DefaultValue(false)]
             public bool critRollover;
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("Slap levels on any non-stackable")]
-        [Tooltip("High Velocity Wire Cutters? 4x speed Clemenator? Sure, why not. Default: Disabled")]
+        [Label("$Mods.UpgradePlus.Configs.AnythingLevels")]
+        [Tooltip("$Mods.UpgradePlus.Configs.AnythingLevelsDesc")]
         [DefaultValue(false)]
             public bool anythingLevels;
 

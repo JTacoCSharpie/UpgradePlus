@@ -1,9 +1,6 @@
-using UpgradePlus.UI;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.UI;
+using static UpgradePlus.Localization;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace UpgradePlus
 {
@@ -18,7 +15,8 @@ namespace UpgradePlus
                 Mod censusMod = ModLoader.GetMod("Census");
                 if (censusMod != null)
                 {
-                    censusMod.Call("TownNPCCondition", Find<ModNPC>("Blacksmith").Type, "When EoC, EoW, BoC, or Skeletron are defeated");
+                    // See Localization.cs for translating
+                    censusMod.Call("TownNPCCondition", Find<ModNPC>("Blacksmith").Type, GetModCallTranslation("Census", Language.ActiveCulture.Name));
                 }
             }
         }

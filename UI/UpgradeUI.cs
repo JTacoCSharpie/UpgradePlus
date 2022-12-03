@@ -1,3 +1,4 @@
+using static UpgradePlus.Localization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -98,7 +99,7 @@ namespace UpgradePlus.UI
 
         private int whoAmItem;
         private int lastLevel;
-        private string maxCostCache;
+        private string cachedCostToMax;
         private bool tick1Played;
         private bool tick2Played;
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -148,7 +149,7 @@ namespace UpgradePlus.UI
                     {
                         tick2Played = false;
                     }
-                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, "Refund  " + string.Format("{0:n0}", refundCost) + " tokens?", new Vector2(refundX - 50, refundY), col, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, GetTrans("UI.RefundTokens", string.Format("{0:n0}", refundCost)), new Vector2(refundX - 50, refundY), col, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                 }
 
                 int upgradeCap = Math.Min(Levelhandler.tierCap, 20);
@@ -165,18 +166,18 @@ namespace UpgradePlus.UI
                     Texture2D reforgeTexture = (Texture2D)TextureAssets.Reforge[hoveringOverReforgeButton ? 1 : 0];
                     Main.spriteBatch.Draw(reforgeTexture, new Vector2(reforgeX, reforgeY), null, Color.White, 0f, reforgeTexture.Size() / 2f, 0.8f, SpriteEffects.None, 0f);
                     int cost = Levelhandler.GetCost(itemWrapper.item, level + 1);
-                    if (whoAmItem != itemWrapper.item.type || maxCostCache == string.Empty || level != lastLevel) // Only recalculate the max cost when something's changed
+                    if (whoAmItem != itemWrapper.item.type || cachedCostToMax == string.Empty || level != lastLevel) // Only recalculate the max cost when something's changed
                     {
-                        maxCostCache = string.Format("{0:n0}", Levelhandler.GetCostForGivenLevel(itemWrapper.item, upgradeCap) - Levelhandler.GetCostForGivenLevel(itemWrapper.item, level));
+                        cachedCostToMax = string.Format("{0:n0}", Levelhandler.GetCostForGivenLevel(itemWrapper.item, upgradeCap) - Levelhandler.GetCostForGivenLevel(itemWrapper.item, level));
                         lastLevel = level;
                         whoAmItem = itemWrapper.item.type;
                     }
-
-                    string costStr = "[c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + "Cost: " + String.Format("{0:n0}", cost) + " Upgrade Tokens/" + maxCostCache + " Max]";
+                    
+                    string costStr = "[c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + GetTrans("UI.UpgradeCost", String.Format("{0:n0}", cost), cachedCostToMax)+ "]";
                     ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, costStr, new Vector2(slotX + 50, (float)slotY), Color.White, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                     if (hoveringOverReforgeButton) // UPGRADE --
                     {
-                        Main.hoverItemName = "Upgrade\nRight click to max";
+                        Main.hoverItemName = GetTrans("UI.UpgradeHoverBlurb");
                         if (!tick1Played)
                         {
                             SoundEngine.PlaySound(SoundID.MenuTick);
@@ -220,7 +221,7 @@ namespace UpgradePlus.UI
                 }
                 else if (level < Levelhandler.tierCap && Levelhandler.doHardmodeCap && upgradeCap >= 20)
                 {
-                    string hmCheck = "[c/" + Colors.AlphaDarken(Colors.RarityRed).Hex3() + ":" + "Reach Hardmode to further upgrade]";
+                    string hmCheck = "[c/" + Colors.AlphaDarken(Colors.RarityRed).Hex3() + ":" + GetTrans("UI.HardmodeLock") + "]";
                     ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, hmCheck, new Vector2(slotX + 50, (float)slotY), Color.White, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                 }
 

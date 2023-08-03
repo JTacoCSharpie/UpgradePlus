@@ -34,6 +34,12 @@ maxHP+Atk+Def. Boosted in HM + further in postML.
 
 
 --Changelog--
+1.0.8 Release:
+* New alt token scaling config
+* HM cap toggle replaced with HM & ML number inputs
+* Underpowered mode now has all stats, new UP-er
+ mode with only classic weapon stats added
+
 1.0.7 Release:
 * Almost all text now supports localization
 * Blacksmith MSG buffer: repeats lines less often

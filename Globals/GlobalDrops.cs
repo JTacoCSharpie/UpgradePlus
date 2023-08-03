@@ -6,17 +6,18 @@ namespace UpgradePlus.Globals
 {
     class GlobalDrops : GlobalNPC
     {
+        const short conv = short.MaxValue - 1;
 
         public override void OnKill(NPC npc)
         {
-
             if (npc.boss || npc.lifeMax >= 1000 && npc.damage > 0)
             {
+                Random random = new();
                 double dropCalc;
                 int dropCount;
+
                 float stageMulti = 1; // World progression multiplier
-                Random random = new();
-                if (Main.hardMode)
+                if (Main.hardMode && npc.boss)
                 {
                     stageMulti = 2;
                     if (NPC.downedMoonlord)
@@ -25,42 +26,27 @@ namespace UpgradePlus.Globals
                     }
                 }
 
-                if (npc.boss)
+                // One token for every 1k hp + extra for every 100 defence and damage, multiply 1-2x for extra variety
+                dropCalc = Math.Max((npc.lifeMax / 1000) + (npc.defDefense / 100) + (npc.defDamage / 100), 1);
+                if (Levelhandler.toughTokens)
                 {
-                    dropCalc = Math.Max((npc.lifeMax / 1000) + (npc.defDefense / 100) + (npc.defDamage / 100), 1); // One token for every 1k hp + extra for every 100 defence and damage
-                    dropCalc *= (1 + random.NextDouble()) * stageMulti; // Multiply the result by 100% to 150% for extra variety
-                    dropCount = (int)Math.Ceiling(dropCalc); // Round down to the nearest whole number
-                    if (dropCount >= short.MaxValue) // Compression
-                    {
-                        if (dropCount > 100000)
-                        {
-                            dropCount = 100000 + (int)(dropCount * 0.1f);
-                        }
-                        float tier2 = dropCount / (short.MaxValue-1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.CompressedToken>(), (int)tier2, true);
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount - (int)(tier2 * (short.MaxValue-1)), true);
-                    }
-                    else
-                    {
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount, true);
-                    }
-
+                    dropCalc *= 1.1f - Math.Log10(dropCalc)/10;
                 }
-                else // Minibosses, modded enemies, vanilla enemies on modded difficulties
+                dropCalc *= (1 + random.NextDouble()) * stageMulti;
+                dropCount = (int)Math.Ceiling(dropCalc);
+                if (dropCount > 100000)
                 {
-                    dropCalc = Math.Max((npc.lifeMax / 1000) + (npc.defDefense / 100) + (npc.defDamage / 100), 1);
-                    dropCalc *= (1 + random.NextDouble());
-                    dropCount = (int)Math.Ceiling(dropCalc);
-                    if (dropCount >= short.MaxValue)
-                    {
-                        float tier2 = dropCount / (short.MaxValue - 1);
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.CompressedToken>(), (int)tier2, true);
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount - (int)(tier2 * (short.MaxValue - 1)), true);
-                    }
-                    else
-                    {
-                        npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount, true);
-                    }
+                    dropCount = 100000 + (int)(dropCount * 0.1f);
+                }
+                if (dropCount >= conv)
+                {
+                    float tier2 = dropCount / (short.MaxValue - 1);
+                    npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.CompressedToken>(), (int)tier2, true);
+                    npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount - (int)(tier2 * conv), true);
+                }
+                else
+                {
+                    npc.DropItemInstanced(npc.position, npc.Size, ModContent.ItemType<Items.UpgradeToken>(), dropCount, true);
                 }
             }
 

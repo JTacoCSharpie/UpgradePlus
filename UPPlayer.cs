@@ -10,10 +10,7 @@ namespace UpgradePlus
         public float tigerBoost, tigerCrit;
         public float abigailBoost, abigailCrit;
 
-        public override void LoadData(TagCompound tag)
-        {
-            SpentTokens = tag.GetAsDouble("UpgradePlusSpentTokens");
-        }
+        public override void LoadData(TagCompound tag) => SpentTokens = tag.GetAsDouble("UpgradePlusSpentTokens");
         public override void SaveData(TagCompound tag)
         {
             if (SpentTokens > 0)

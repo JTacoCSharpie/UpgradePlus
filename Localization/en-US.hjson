@@ -73,24 +73,28 @@ Mods: {
 				SharedTuneDesc: Change the effect upgrades have on the corresponding stat by X%. Default: 100%
 
 				AltSprites: Alt Sprites
-				AltSpritesDesc: "Requires Reload\n0: Default\n1: Kifirer"
+				AltSpritesDesc: " Requires Reload \n0: Default\n1: Kifirer"
 				CritRolloverDebug: Crit Rollover: Say extended projectile details OnHit in chat
 
 			ServerClassName: Server
 			#Server
 				LevelCap: Change Maximum Upgrade Cap
-				LevelCapDesc: Default: 40
+				LevelCapDesc: "Default: 40"
 				StatBalance: Stat Balance
-				StatBalanceDesc: "0. Overpowered\n1. Default\n2. Underpowered - Some stat's stop applying"
-				HardmodeCap: Cap Upgrades at 20 until Hardmode?
-				HardmodeCapDesc: Default: Enabled - Recommended Enabled
+				StatBalanceDesc: "0. Overpowered\n1. Default\n2. Underpowered\n3. Underpowered + Classic Weapon Stats only"
+				HardmodeCap: "Cap Upgrades to X until Hardmode:"
+				HardmodeCapDesc: "Cap upgrades at (HM or Max - whichever cap is lower) until Hardmode\nDefault: 20"
+				MoonlordCap: "Cap Upgrades to X until ML:"
+				MoonlordCapDesc: "Cap upgrades at (ML or Max - whichever cap is lower) until ML is defeated\nDefault: 256 (disabled)"
 				RefundOverride: Let players refund Levels
 				RefundOverrideDesc: Serverside Override - Default: Enabled
 				Autofire: Autofire Threshold
 				AutofireDesc: "Change the level force autofire applies at if enabled - Default: 20\n0 makes all items autofire - 256 disables it for all players"
+				ToughTokens: Tough Tokens
+				ToughTokensDesc: "Tokens scale logarithmically instead of linearly\nDefault: Disabled"
 
 				CritRollover: Crit chance past 100% rolls into additional crits
-				CritRolloverDesc: "E.G: 130% crit = Default crit with a 30% chance of doing 4x. Default: Disabled\nIf you're having damage numbers of only 2 pop up, try disabling this first."
+				CritRolloverDesc: "E.G: 130% crit = Always crit for 2x with a 30% chance of doing 4x. Default: Disabled\nIf you're having damage numbers of only 1-2 pop up, try disabling this first."
 				AnythingLevels: Slap levels on any non-stackable
 				AnythingLevelsDesc: High Velocity Wire Cutters? 4x speed Clemenator? Sure, why not. Default: Disabled
 
@@ -155,6 +159,7 @@ Mods: {
 						Line4: as a plumber
 						Line5: as a streamer
 						Line6: as a vtuber
+						Line7: as a maid
 					}
 					DrunkPrincessExists: {
 						Line0: Cirrus scares me. I dared her to drink a bucket of lava and she looked me dead in the eye 'n started chugging.
@@ -169,6 +174,8 @@ Mods: {
 			UpgradeCost: "Cost: {0} Upgrade Tokens/{1} Max"
 			UpgradeHoverBlurb: "Upgrade\nRight click to max"
 			HardmodeLock: Reach Hardmode to further upgrade
+			MoonlordLock: Beat Moonlord for further upgrades
+
 
 			#Tooltips displayed on upgraded items
 			Tooltips: {

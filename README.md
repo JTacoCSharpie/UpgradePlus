@@ -6,7 +6,7 @@ The Blacksmith is a TownNPC available after beating Eoc, EoW, or BoC. Fight boss
 
 ## Features
 * Directly Upgrade Weapons, Wings, Armor & Accessories through instanced GlobalItems
-* Configs: Crit Rollover, 3 stat balance presets, configurable weapon autofire, stat bonus tuning, and slightly more!
+* Configs: Crit Rollover, 4 stat balance presets, configurable weapon autofire, stat bonus tuning, and slightly more!
 * New Stats: Bonus Crit Damage & Wing Speed upgrades
 * QoL: Right click to max & token sleeves automatically convert to tokens during purchases
 

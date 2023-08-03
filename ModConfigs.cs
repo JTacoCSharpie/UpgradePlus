@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader.Config;
+﻿using System;
+using Terraria.ModLoader.Config;
 using System.ComponentModel;
 
 namespace UpgradePlus
@@ -68,6 +69,7 @@ namespace UpgradePlus
         [Range(0,1)]
         [DefaultValue(0)]
         [Slider]
+        [DrawTicks]
             public int artStyle;
         [Label("$Mods.UpgradePlus.Configs.CritRolloverDebug")]
         [DefaultValue(false)]
@@ -110,16 +112,26 @@ namespace UpgradePlus
         [BackgroundColor(100, 50, 50, 255)]
         [Label("$Mods.UpgradePlus.Configs.StatBalance")]
         [Tooltip("$Mods.UpgradePlus.Configs.StatBalanceDesc")]
-        [Range(0, 2)]
+        [Range(0, 3)]
         [DefaultValue(1)]
         [Slider]
+        [DrawTicks]
             public int statFormulaModel;
 
         [BackgroundColor(100, 50, 50, 255)]
         [Label("$Mods.UpgradePlus.Configs.HardmodeCap")]
         [Tooltip("$Mods.UpgradePlus.Configs.HardmodeCapDesc")]
-        [DefaultValue(true)]
-            public bool doHardmodeCaps;
+        [Range(20, 256)]
+        [DefaultValue(20)]
+            public int hardmodeCap;
+        [BackgroundColor(100, 50, 50, 255)]
+        [Label("$Mods.UpgradePlus.Configs.MoonlordCap")]
+        [Tooltip("$Mods.UpgradePlus.Configs.MoonlordCapDesc")]
+        [Range(20, 256)]
+        [DefaultValue(256)]
+            public int moonlordCap;
+
+
         [BackgroundColor(100, 50, 50, 255)]
         [Label("$Mods.UpgradePlus.Configs.RefundOverride")]
         [Tooltip("$Mods.UpgradePlus.Configs.RefundOverrideDesc")]
@@ -134,6 +146,11 @@ namespace UpgradePlus
         [Range(0, 256)]
         [DefaultValue(20)]
             public int reuseLevel;
+        [Label("$Mods.UpgradePlus.Configs.ToughTokens")]
+        [BackgroundColor(100, 50, 50, 255)]
+        [Tooltip("$Mods.UpgradePlus.Configs.ToughTokensDesc")]
+        [DefaultValue(false)]
+            public bool toughTokens;
 
         [Header("$Mods.UpgradePlus.Configs.Shared.Fun")]
         [BackgroundColor(100, 50, 50, 255)]
@@ -151,11 +168,13 @@ namespace UpgradePlus
         {
             Levelhandler.formula = statFormulaModel;
             Levelhandler.tierCap = tierCap;
-            Levelhandler.doHardmodeCap = doHardmodeCaps;
+            Levelhandler.hardmodeCap = hardmodeCap;
+            Levelhandler.moonlordCap = moonlordCap;
             Levelhandler.doServerRefunds = doServerRefunds;
 
             Levelhandler.critRollover = critRollover;
             Levelhandler.reuseLevel = reuseLevel;
+            Levelhandler.toughTokens = toughTokens;
             Levelhandler.anythingLevels = anythingLevels;
         }
     }

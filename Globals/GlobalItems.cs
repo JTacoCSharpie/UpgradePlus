@@ -21,15 +21,10 @@ namespace UpgradePlus.Globals
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => true;
 
-        public override void SetDefaults(Item item)
-        {
-			defaultDefence = item.defense;
-		}
-		public override void PostReforge(Item item)
-        {
-			defaultDefence = item.defense;
-		}
-        /*public override bool PreReforge(Item item) // Refund items when Calamity breaks again
+        public override void SetDefaults(Item item) => defaultDefence = item.defense;
+		public override void PostReforge(Item item) => defaultDefence = item.defense;
+
+        /*public override bool PreReforge(Item item) // Refund items if/when Calamity breaks again
 		{
 			if (ModLoader.HasMod("CalamityMod") && level > 0)
 			{
@@ -37,6 +32,7 @@ namespace UpgradePlus.Globals
 			}
 			return true;
 		}*/
+
         public override GlobalItem Clone(Item item, Item itemClone)
 		{
 			ItemLevelHooks myClone = (ItemLevelHooks)base.Clone(item, itemClone);
@@ -252,7 +248,7 @@ namespace UpgradePlus.Globals
 			}
 		}
 
-		public override void SaveData(Item item, TagCompound tag)/* Suggestion: Edit tag parameter rather than returning new TagCompound */
+		public override void SaveData(Item item, TagCompound tag)
 		{
 			if (level > 0)
             {
@@ -319,7 +315,7 @@ namespace UpgradePlus.Globals
 					}
 				}
 			}
-			if (source is EntitySource_Misc castedMisc) // Desert Tiger & Abigail being a wacky little fellas
+			if (source is EntitySource_Misc castedMisc) // Desert Tiger & Abigail being wacky little fellas
             {
 				if (castedMisc.Context == "StormTigerTierSwap" && !projectile.npcProj)
                 {

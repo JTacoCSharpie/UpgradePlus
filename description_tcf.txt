@@ -8,7 +8,7 @@ Take your favorite weapons deeper into the game, grind past difficult bosses, le
 1 Town NPC, 2 Items
 Directly Upgrade Weapons, Wings, Armors & Accessories
 Weapons: Accepts any weapon that accepts prefixes [SIZE=3](1.3)[/SIZE] or any weapon with non-zero damage [SIZE=3](1.4)[/SIZE], supports all damage types [SIZE=2]I think[/SIZE]
-Configs: Crit Rollover, 3 stat balance presets, configurable weapon auto-fire, stat bonus tuning, and [SIZE=3]slightly[/SIZE] more!
+Configs: Crit Rollover, 4 stat balance presets, configurable weapon auto-fire, stat bonus tuning, and [SIZE=3]slightly[/SIZE] more!
 New Stats: Bonus Crit Damage & Wing Speed
 QoL: Remembers favorite status and right click to max, automatically converts sleeves to tokens
 
@@ -52,6 +52,12 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 
 [/SPOILER]
 [SPOILER="Changelog"]
+1.0.8 Update:
+[LIST]
+[*]New alt token scaling config
+[*]HM cap toggle replaced with HM & ML number inputs
+[*]Underpowered mode now has all stats, new UP-er mode with only classic weapon stats added
+[/LIST]
 1.0.7 Localization Update:
 [LIST]
 [*]Almost all text now supports localization
@@ -95,4 +101,5 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 [URL='https://github.com/sjieh/UpgradeEquipment']GitHub - sjieh/UpgradeEquipment: Terraria Modloader mod that allows you to upgrade equipment similar to reforging.[/URL] hrr_'s fork, also available in-game
 [/SPOILER]
 [ATTACH type="full" alt="CompressedToken.png"]371612[/ATTACH][ATTACH type="full" width="61px" alt="UpgradeToken.png"]371613[/ATTACH]
+
 [/CENTER]

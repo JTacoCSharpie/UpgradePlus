@@ -51,9 +51,12 @@ namespace UpgradePlus
             }
             else // If the decimals are non-zero
             {
-                float trim = MathF.Abs(num); // Remove minus sign as a factor
-                int height = (int)MathF.Log10(trim) + 1; // Get the numbers before the decimal place
-                int size = Math.Clamp(num.ToString().Length - (height + 1), 0, 2); // Get the string size we want, minus the decimal seperator & the integer numbers
+                // Remove minus sign as a factor
+                float trim = MathF.Abs(num);
+                // Get the numbers before the decimal place
+                int height = (int)MathF.Log10(trim) + 1;
+                // Get the string size we want, minus the decimal seperator & the integer numbers
+                int size = Math.Clamp(num.ToString().Length - (height + 1), 0, 2);
                 return string.Format("{0:F" + size + "}", num);
             }
         }

@@ -13,16 +13,15 @@ namespace UpgradePlus.Items
 			get { return "UpgradePlus/Items/CompressedToken" + ModContent.GetInstance<Client>().artStyle; }
 		}
 
-		public override void SetStaticDefaults() 
-		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
-		}
+		public override void SetStaticDefaults() => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+
 
 		public override void SetDefaults() 
 		{
 			Item.rare = ItemRarityID.Orange;
 			Item.value = 500 * (short.MaxValue-1);
-			Item.maxStack = short.MaxValue-1; // Terraria syncs items using shorts, so any higher value will cause oddities in MP
+			// Terraria syncs items using shorts, so any higher value will cause oddities in MP
+			Item.maxStack = short.MaxValue-1;
 			Item.width = 32;
 			Item.height = 32;
 		}

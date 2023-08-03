@@ -21,14 +21,17 @@ namespace UpgradePlus.Npcs
 			Main.npcFrameCount[NPC.type] = 26;
 			NPCID.Sets.ExtraFramesCount[NPC.type] = 6;
 			NPCID.Sets.AttackFrameCount[NPC.type] = 5;
-			NPCID.Sets.DangerDetectRange[NPC.type] = 700; // How far a Town NPC can detect an enemy.
-			NPCID.Sets.AttackType[NPC.type] = 0; // The attack style an NPC copies. Set to 0 if the NPC has a custom attack.
+			// How far a Town NPC can detect an enemy.
+			NPCID.Sets.DangerDetectRange[NPC.type] = 700;
+			// The attack style an NPC copies. Set to 0 if the NPC has a custom attack.
+			NPCID.Sets.AttackType[NPC.type] = 0;
 			NPCID.Sets.AttackTime[NPC.type] = 120;
 			NPCID.Sets.AttackAverageChance[NPC.type] = 45;
 			NPCID.Sets.HatOffsetY[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new(0)
 			{
-				Velocity = 0.0001f, // Draws the NPC in the bestiary as if its walking +X tiles in the x direction
+				// Draws the NPC in the bestiary as if its walking +X tiles in the x direction
+				Velocity = 0.0001f,
 				Rotation = MathHelper.ToRadians(0)
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifiers);
@@ -89,7 +92,8 @@ namespace UpgradePlus.Npcs
 		}
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
-			return (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3); // Spawn if EoC, EoW/BoC, or Skele have been defeated
+			// Spawn if EoC, EoW/BoC, or Skele have been defeated
+			return (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3);
 		}
 		public override List<string> SetNPCNameList()
 		{
@@ -98,8 +102,8 @@ namespace UpgradePlus.Npcs
 		}
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
 		{
-			damage = 15; // The amount of damage the Town NPC inflicts.
-			knockback = 4f; // The amount of knockback the Town NPC inflicts.
+			damage = 15;
+			knockback = 4f;
 			if (Main.hardMode)
             {
 				damage *= 4;
@@ -108,19 +112,22 @@ namespace UpgradePlus.Npcs
 		}
 		public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
 		{
-			cooldown = 30; // The amount of ticks the Town NPC takes to cool down. Every 60 in-game ticks is a second.
-			randExtraCooldown = 30; // How long it takes until the NPC attacks again, but with a chance.
+			// The amount of ticks the Town NPC takes to cool down. Every 60 in-game ticks is a second.
+			cooldown = 30;
+			// How long it takes until the NPC attacks again, but with a chance.
+			randExtraCooldown = 30;
 		}
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
 		{
 			projType = ProjectileID.VampireKnife;
-			attackDelay = 1; // Delays attacks by X number of frames
+			// Delays attacks by X number of frames
+			attackDelay = 1;
 		}
 		public override void TownNPCAttackProjSpeed(ref float multiplier, ref float gravityCorrection, ref float randomOffset)
 		{
-			multiplier = 10f; // The Speed of the Projectile
+			multiplier = 10f;
 			gravityCorrection = -1f;
-			randomOffset = -1f; // Random Offset
+			randomOffset = -1f;
 		}
 
 		/// <summary> Loops over "Mods.UpgradePlus."+partialPath+"Line"+i so the destination is expected to have Line0 and onward contained </summary>
@@ -129,12 +136,14 @@ namespace UpgradePlus.Npcs
 			List<string> lines = new();
 			for (int i = 0; i < 100; i++)
             {
-				if (GetTrans(partialPath + ".Line" + i) != "Mods.UpgradePlus."+partialPath+".Line"+i) // If our output is the same as our input then we've hit an invalid localization key
+				// If our output is the same as our input then we've hit an invalid localization key
+				if (GetTrans(partialPath + ".Line" + i) != "Mods.UpgradePlus."+partialPath+".Line"+i)
                 {
 					lines.Add(GetTrans(partialPath + ".Line" + i));
 				}
-				else // We used invalid localization keys as a stopping point so I can be lazy and not hardcode the loop stops
-                {
+				// using invalid localization keys as a stopping point so I can be lazy and not hardcode the loop stops
+				else
+				{
 					if (i == 0 && Main.netMode != NetmodeID.Server)
 					{ Main.NewText("Please report an error with localization: ["+partialPath+"] to ths UpgradePlus dev"); }
 					break;
@@ -157,45 +166,55 @@ namespace UpgradePlus.Npcs
 			// Modded Messages
 			if (ModLoader.HasMod("CalamityMod"))
             {
+				// Calamity lines
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity") );
 				Mod Calamity = ModLoader.GetMod("CalamityMod");
 				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("FAP").Type) > 0)
                 {
+					// Fabsol lines
 					condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.DrunkPrincessExists") );
 				}
 				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("WITCH").Type) > 0)
                 {
+					// Calamitas lines
 					List<string> potentialJobs = GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.CalamitasJobs");
 					condLines.Add( GetTrans("BlacksmithNPC.Dialogue.Calamity.CalamitasExists", Main.rand.Next(potentialJobs)) );
 				}
 			}
 			if (ModLoader.HasMod("UpgradeEquipment") || ModLoader.HasMod("UpgradeEquipment_hrr"))
             {
+				// Upgrade Equip lines
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.UpgradeMods") );
 			}
 
 			// Conditional Vanilla Messages
 			if (NPC.FindFirstNPC(NPCID.TaxCollector) < 0)
 			{
+				// No Tax Collector
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NoTaxes") );
 			}
 			else
 			{
+				// Tax Collector
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Taxes") );
 			}
 			if (Main.dayTime)
             {
+				// Daytime lines
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.DayLines") );
 			}
 			else
             {
+				// Nighttime lines
 				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NightLines") );
 			}
 			if (spent > 1)
             {
+				// Spent tokens info
 				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.SpentTokens", String.Format("{0:n0}", spent), String.Format("{0:n0}", Math.Floor((spent + 1) / (short.MaxValue - 1))) ));
             }
 
+			//Default line
 			string MSG = "Wow, you found a secret message! The error message. Either the mod itself or an interaction with another mod has lead to this error :thumbsup:";
 			int category = Main.rand.Next(10);
 

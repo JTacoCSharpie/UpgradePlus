@@ -22,10 +22,8 @@ namespace UpgradePlus.UI
         internal UpgradeCanvas upgradeCanvas;
         public UserInterface _userInterface;
 
-        public override void UpdateUI(GameTime gameTime)
-        {
-            _userInterface?.Update(gameTime);
-        }
+        public override void UpdateUI(GameTime gameTime) => _userInterface?.Update(gameTime);
+
 
         public override void Load()
         {
@@ -152,10 +150,17 @@ namespace UpgradePlus.UI
                     ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, GetTrans("UI.RefundTokens", string.Format("{0:n0}", refundCost)), new Vector2(refundX - 50, refundY), col, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                 }
 
-                int upgradeCap = Math.Min(Levelhandler.tierCap, 20);
-                if (Main.hardMode || !Levelhandler.doHardmodeCap)
+                int upgradeCap = Levelhandler.tierCap;
+                if (!Main.hardMode)
                 {
-                    upgradeCap = Levelhandler.tierCap;
+                    upgradeCap = Math.Min(Levelhandler.hardmodeCap, Levelhandler.tierCap);
+                }
+                else
+                {
+                    if (!NPC.downedMoonlord)
+                    {
+                        upgradeCap = Math.Min(Levelhandler.moonlordCap, Levelhandler.tierCap);
+                    }
                 }
 
                 if (level < upgradeCap)
@@ -166,7 +171,8 @@ namespace UpgradePlus.UI
                     Texture2D reforgeTexture = (Texture2D)TextureAssets.Reforge[hoveringOverReforgeButton ? 1 : 0];
                     Main.spriteBatch.Draw(reforgeTexture, new Vector2(reforgeX, reforgeY), null, Color.White, 0f, reforgeTexture.Size() / 2f, 0.8f, SpriteEffects.None, 0f);
                     int cost = Levelhandler.GetCost(itemWrapper.item, level + 1);
-                    if (whoAmItem != itemWrapper.item.type || cachedCostToMax == string.Empty || level != lastLevel) // Only recalculate the max cost when something's changed
+                    // Only recalculate the max cost when something's changed
+                    if (whoAmItem != itemWrapper.item.type || cachedCostToMax == string.Empty || level != lastLevel)
                     {
                         cachedCostToMax = string.Format("{0:n0}", Levelhandler.GetCostForGivenLevel(itemWrapper.item, upgradeCap) - Levelhandler.GetCostForGivenLevel(itemWrapper.item, level));
                         lastLevel = level;
@@ -219,17 +225,26 @@ namespace UpgradePlus.UI
                         tick1Played = false;
                     }
                 }
-                else if (level < Levelhandler.tierCap && Levelhandler.doHardmodeCap && upgradeCap >= 20)
+                else if (level < Levelhandler.tierCap)
                 {
-                    string hmCheck = "[c/" + Colors.AlphaDarken(Colors.RarityRed).Hex3() + ":" + GetTrans("UI.HardmodeLock") + "]";
-                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, hmCheck, new Vector2(slotX + 50, (float)slotY), Color.White, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
+                    string tierCheck = "";
+                    if (!Main.hardMode)
+                    {
+                        tierCheck = "[c/" + Colors.AlphaDarken(Colors.RarityRed).Hex3() + ":" + GetTrans("UI.HardmodeLock") + "]";
+                    }
+                    else
+                    {
+                        tierCheck = "[c/" + Colors.AlphaDarken(Colors.RarityRed).Hex3() + ":" + GetTrans("UI.MoonlordLock") + "]";
+                    }
+                    ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, tierCheck, new Vector2(slotX + 50, (float)slotY), Color.White, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                 }
 
             }
         }
     }
 
-    internal class ItemWrapper : UIElement      // Item Wrapper taken from examplemod
+    // Item Wrapper taken from examplemod
+    internal class ItemWrapper : UIElement
     {
         internal Item item;
         private readonly int _context;

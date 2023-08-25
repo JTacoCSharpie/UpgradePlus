@@ -210,41 +210,36 @@ namespace UpgradePlus.Globals
 
 		public override void ModifyHitNPC(Item item, Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			int lv = level;
-			if (crit && Levelhandler.critRollover)
+
+			if (crit)
 			{
-				float gItemCritMods = 0, gPlayerCritMods = 0;
-				ItemLoader.ModifyWeaponCrit(item, player, ref gItemCritMods);
-				PlayerLoader.ModifyWeaponCrit(player, item, ref gPlayerCritMods);
-				int chance = (int)(gPlayerCritMods + gItemCritMods + player.GetTotalCritChance(item.DamageType));
-				chance -= 100; // Remove the chance of the crit starting this chain
-				if (chance > 0) // Begin extra crit rolls
-				{
-					bool keepLooping = true;
-					float haveLooped = 0.5f;
-					while (chance > 0 && keepLooping) // While we have a chance to crit more
+				// Potentially apply boosted Crit Damage
+				damage = (level > 0 && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(level, Stat.CritDamage))) : damage;
+
+				if (Levelhandler.critRollover)
+                {
+					float gItemCritMods = 0, gPlayerCritMods = 0;
+					ItemLoader.ModifyWeaponCrit(item, player, ref gItemCritMods);
+					PlayerLoader.ModifyWeaponCrit(player, item, ref gPlayerCritMods);
+					int chance = (int)(gPlayerCritMods + gItemCritMods + player.GetTotalCritChance(item.DamageType));
+					chance -= 100; // Remove the chance of the crit starting this chain
+					if (chance > 0) // Begin extra crit rolls
 					{
-						if (Main.rand.NextBool((int)Math.Max((100f / chance), 1))) // If we roll a crit
+						bool keepLooping = true;
+						while (chance > 0 && keepLooping) // While we have a chance to crit more
 						{
-							damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * haveLooped) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage * 2; // Either use crit damage, or x2
+							if ((Main.rand.NextFloat() * 100) > 100 - chance) // If we roll a crit
+							{
+								damage *= (level > 0 && Levelhandler.doCritDamage) ? (int)(2 + Levelhandler.GetStat(level, Stat.CritDamage)) : 2; // Either use crit damage, or x2
+							}
+							else // If we fail a crit
+							{
+								keepLooping = false;
+							}
+							chance -= 100;
 						}
-						else // If we fail a crit
-						{
-							damage = (lv > 0 && haveLooped == 0.5f && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage; // Apply damage multi to base crit if we've fail our first rollover, do nothing if we're failing a subsequent
-							keepLooping = false;
-						}
-						chance -= 100;
-						haveLooped = 1;
 					}
 				}
-				else if (lv > 0 && Levelhandler.doCritDamage) // Our remaining chance was lower than 1% but we still need to apply crit damage
-				{
-					damage = (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage)));
-				}
-			}
-			else if (crit) // critRollover is disabled
-			{
-				damage = (lv > 0 && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + Levelhandler.GetStat(lv, Stat.CritDamage))) : damage; // Either use crit damage, or don't apply
 			}
 		}
 
@@ -335,56 +330,50 @@ namespace UpgradePlus.Globals
 
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+
 			if (!projectile.npcProj)
 			{
 				damage = (int)(damage * minionMulti);
-				if (crit && Levelhandler.critRollover)
+				if (crit)
 				{
-					int critChance = projectile.CritChance;
-					if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server)
+					// Potentially apply boosted Crit Damage
+					damage = (lvled && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + critMulti)) : damage;
+
+					if (Levelhandler.critRollover)
 					{
-						Main.NewText(GetTrans("UI.CritRolloverDebugLine1", critChance, critMulti, projectile.DamageType.DisplayName));
-						Main.NewText(GetTrans("UI.CritRolloverDebugLine2", projectile.minion, projectile.sentry));
-					}
-					critChance -= 100; // Remove beginning crit's chance
-					if (critChance > 0) // Begin extra crit rolls
-					{
-						int i = 0;
-						bool keepLooping = true;
-						float haveLooped = 0.5f;
-						while (critChance > 0 && keepLooping) // While we have a chance to crit more
+						int critChance = projectile.CritChance;
+						if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server)
 						{
-							if (Main.rand.NextBool((int)Math.Max((100f / critChance), 1))) // If we roll a crit
+							Main.NewText(GetTrans("UI.CritRolloverDebugLine1", critChance, critMulti, projectile.DamageType.DisplayName));
+							Main.NewText(GetTrans("UI.CritRolloverDebugLine2", projectile.minion, projectile.sentry));
+						}
+						critChance -= 100; // Remove the chance of the crit starting this chain
+						if (critChance > 0) // Begin extra crit rolls
+						{
+							int i = 0;
+							bool keepLooping = true;
+							while (critChance > 0 && keepLooping) // While we have a chance to crit more
 							{
-								damage = (lvled && Levelhandler.doCritDamage) ? (int)((damage * haveLooped) * (2 + critMulti)) : damage * 2; // Either use crit damage, or x2
-								if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server) 
+								if ((Main.rand.NextFloat() * 100) > 100 - critChance) // If we roll a crit
 								{
-									i++;
-									Main.NewText(GetTrans("UI.CritRolloverDebugLoop", critChance, damage, i));
+									damage *= (lvled && Levelhandler.doCritDamage) ? (int)(2 + critMulti) : 2; // Either use crit damage, or x2
+									if (Levelhandler.doDebug && Main.netMode != NetmodeID.Server)
+									{
+										i++;
+										Main.NewText(GetTrans("UI.CritRolloverDebugLoop", critChance, damage, i));
+									}
 								}
+								else // If we fail a crit
+								{
+									keepLooping = false;
+								}
+								critChance -= 100;
 							}
-							else // If we fail a crit
-							{
-								damage = (lvled && haveLooped == 0.5f && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + critMulti)) : damage; // Apply damage multi to base crit if we've fail our first rollover, do nothing if we're failing a subsequent
-								keepLooping = false;
-							}
-							critChance -= 100;
-							haveLooped = 1;
 						}
 					}
-					else if (lvled && Levelhandler.doCritDamage) // Our remaining chance was lower than 1% but we still need to apply crit damage
-					{
-						damage = (int)((damage * 0.5) * (2 + critMulti));
-					}
-
 				}
-				else if (crit) // critRollover is disabled
-				{
-					damage = (lvled && Levelhandler.doCritDamage) ? (int)((damage * 0.5) * (2 + critMulti)) : damage; // Either use crit damage, or don't apply
-				}
-			}
+            }
 		}
-
 
 	}
 }

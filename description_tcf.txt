@@ -15,10 +15,11 @@ QoL: Remembers favorite status and right click to max, automatically converts sl
 [SPOILER="Downloading"]
 1.4:
 [URL='https://steamcommunity.com/sharedfiles/filedetails/?id=2851452153']Available for download on Steam Workshop[/URL]
-Build from  [URL='https://github.com/JTacoCSharpie/UpgraderPlus']Github[/URL]
+Build from [URL='https://github.com/JTacoCSharpie/UpgradePlus']Github[/URL] - previous versions (1.4.3, 1.4.4, etc) are also available
+
 1.3:
 Available in-game on 1.3 Mod Browser & Mod Browser mirrors
-Direct download or build from [URL='https://github.com/JTacoCSharpie/UpgraderPlus/tree/1.3']Github[/URL]
+Direct download or build from [URL='https://github.com/JTacoCSharpie/UpgradePlus/tree/1.3']Github[/URL]
 [/SPOILER]
 
 [B]Getting Started[/B]
@@ -28,13 +29,18 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 [/CENTER]
 [SPOILER="Known Issues"]
 [CENTER][SPOILER="1.4"][/SPOILER][/CENTER]
-[SPOILER="1.4"]
+[SPOILER="1.4.4"]
+[LIST]
+[*]The upgrade slot shows a ¹ in the corner
+[*]Mana cost isn't updated in item descriptions (tML bug)
+[/LIST]
+[/SPOILER]
+[SPOILER="1.4.3"]
 [LIST]
 [*]The upgrade slot shows a ¹ in the corner
 [*]Mana cost isn't updated in item descriptions (tML bug)
 [*]Speed upgrades don't effect mining speeds (tML bug)
 [/LIST]
-[CENTER][/CENTER]
 [/SPOILER]
 [CENTER]
 [SPOILER="1.3"][/SPOILER][/CENTER]
@@ -44,14 +50,19 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 [*]Player projectiles spawned from non-hotbar sources (dual wielding mod, wings, armor bonuses, etc) will use the Crit Damage and Rollover of the currently held item
 [*]Crit Chance doesn't make projectiles crit more often, but does factor in with Crit Rollover
 [*]The upgrade slot shows a ¹ in the corner
-[*]Upgraded wings don't have appropriate speeds when in WingSlot's Wingslot or in the social slot using Antisocial.
+[*]Upgraded wings don't have appropriate speeds when in WingSlot's Wingslots or in the social slot using Antisocial.
 [/LIST]
-[CENTER][/CENTER]
 [/SPOILER]
 [CENTER][/CENTER]
 
 [/SPOILER]
 [SPOILER="Changelog"]
+1.0.9 1.4.4 Port Update:
+[LIST]
+[*]Updated to 1.4.4
+[*]Blacksmith stripped of his happiness
+[*]Bugfixes for Crit Rollover, Pickaxe mining speed
+[/LIST]
 1.0.8 Update:
 [LIST]
 [*]New alt token scaling config

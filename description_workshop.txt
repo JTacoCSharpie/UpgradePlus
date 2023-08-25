@@ -28,11 +28,12 @@ Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range 
 * Now tracks tokens spent per player
 
 -[b]Changelog[/b]->
-1.0.8 Release:
+1.0.8(.1) Releases:
 * New alt token scaling config
 * HM cap toggle replaced with HM & ML number inputs
 * Underpowered mode now has all stats, new UP-er
  mode with only classic weapon stats added
+* Bugfixes for Crit Rollover & Crit Damage
 
 1.0.7 Release:
 * Almost all text now supports localization
@@ -62,10 +63,10 @@ Tokens drop from any NPC with more than 1k hp or any boss, they drop in a range 
 
 -[b]Additional Sources[/b]->
 [quote][i]1.4:[/i]
->Build from the [url=https://github.com/JTacoCSharpie/UpgraderPlus]Github[/url]'s main branch [/quote]
+>Build from the [url=https://github.com/JTacoCSharpie/UpgradePlus]Github[/url]'s main branch [/quote]
 [quote][i]1.3:[/i]
 >In-game Mod browser & Mod browser mirrors
->Direct download or build from the [url=https://github.com/JTacoCSharpie/UpgraderPlus/tree/1.3]Github[/url]'s 1.3 branch [/quote]
+>Direct download or build from the [url=https://github.com/JTacoCSharpie/UpgradePlus/tree/1.3]Github[/url]'s 1.3 branch [/quote]
 
 -[b]Also Check Out[/b]->
 [url=https://forums.terraria.org/index.php?threads/equipment-upgrader-mod.85517/]Oempa's Equipment Upgrade mod for 1.3[/url] also available on github

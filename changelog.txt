@@ -1,0 +1,3 @@
+﻿
+* Updated for 1.4.4
+* Stripped Blacksmith of his happiness

@@ -74,7 +74,7 @@ namespace UpgradePlus.UI
             {
                 Left = { Pixels = 50 },
                 Top = { Pixels = 270 },
-                ValidItemFunc = item => item.IsAir || !item.IsAir && item.maxStack == 1 && (item.headSlot > -1 || item.bodySlot > -1 || item.legSlot > -1 || item.damage != 0 || item.accessory || Levelhandler.anythingLevels)
+                ValidItemFunc = item => item.IsAir || !item.IsAir && item.maxStack == 1 && (item.headSlot > -1 || item.bodySlot > -1 || item.legSlot > -1 || item.damage > 0 || item.accessory || Levelhandler.anythingLevels)
             };
             Append(itemWrapper);
         }
@@ -82,7 +82,7 @@ namespace UpgradePlus.UI
         {
             if (!itemWrapper.item.IsAir)
             {
-                Main.LocalPlayer.QuickSpawnClonedItem(NPC.GetSource_None(), itemWrapper.item, itemWrapper.item.stack);
+                Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_None(), itemWrapper.item, itemWrapper.item.stack);
                 itemWrapper.item.TurnToAir();
             }
         }
@@ -178,8 +178,8 @@ namespace UpgradePlus.UI
                         lastLevel = level;
                         whoAmItem = itemWrapper.item.type;
                     }
-                    
-                    string costStr = "[c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + GetTrans("UI.UpgradeCost", String.Format("{0:n0}", cost), cachedCostToMax)+ "]";
+
+                    string costStr = "[c/" + Colors.AlphaDarken(Colors.CoinPlatinum).Hex3() + ":" + GetTrans("UI.UpgradeCost", String.Format("{0:n0}", cost), cachedCostToMax) + "]";
                     ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, costStr, new Vector2(slotX + 50, (float)slotY), Color.White, 0f, Vector2.Zero, Vector2.One, -1f, 2f);
                     if (hoveringOverReforgeButton) // UPGRADE --
                     {

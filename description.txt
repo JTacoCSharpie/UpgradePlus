@@ -19,7 +19,7 @@ More configs! +Jank test features
 Supports all damage types, Mods included.
 
 --New in 1.4--
-Bestiary Info & Blacksmith NPC happiness
+Bestiary Info & Less repeating Blacksmith messages
 Now tracks tokens spent per player
 
 --Q&A--
@@ -30,16 +30,19 @@ maxHP+Atk+Def. Boosted in HM + further in postML.
 --Known Issues--
 * The upgrade slot shows a 1 in the corner
 * Mana cost isn't updated in item descriptions
-* Speed upgrades don't effect mining speeds
 
 
 --Changelog--
-1.0.8(.1) Release:
+1.0.9
+* Updated for 1.4.4
+* Stripped Blacksmith of his happiness
+* Bugfixes for Crit Rollover, Pickaxe mining speed
+
+1.0.8 Release:
 * New alt token scaling config
 * HM cap toggle replaced with HM & ML number inputs
 * Underpowered mode now has all stats, new UP-er
  mode with only classic weapon stats added
- * Bugfixes for Crit Rollover & Crit Damage
 
 1.0.7 Release:
 * Almost all text now supports localization

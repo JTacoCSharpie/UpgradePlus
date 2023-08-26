@@ -5,78 +5,58 @@ using System.ComponentModel;
 namespace UpgradePlus
 {
 
-    [Label("$Mods.UpgradePlus.Configs.ClientClassName")]
     public class Client : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.CoreFeatures")]
-        [Label("$Mods.UpgradePlus.Configs.CritDamage")]
-        [Tooltip("$Mods.UpgradePlus.Configs.CritDamageDesc")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.CoreFeatures")]
         [DefaultValue(true)]
-            public bool doCritDamage;
-        [Label("$Mods.UpgradePlus.Configs.DoAutofire")]
-        [Tooltip("$Mods.UpgradePlus.Configs.DoAutofireDesc")]
+        public bool doCritDamage;
         [DefaultValue(false)]
-            public bool setReuse;
-        [Label("$Mods.UpgradePlus.Configs.RefundLevels")]
-        [Tooltip("$Mods.UpgradePlus.Configs.RefundLevelsDesc")]
+        public bool setReuse;
         [DefaultValue(true)]
-            public bool doClientRefunds;
+        public bool doClientRefunds;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.TuneFeatures")]
-        [Label("$Mods.UpgradePlus.Configs.SizeEff")]
-        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.TuneFeatures")]
         [Increment(5)]
         [Range(0, 100)]
         [DefaultValue(100)]
         [Slider]
-            public int sizeMulti;
-        [Label("$Mods.UpgradePlus.Configs.VelEff")]
-        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        public int sizeMulti;
         [Increment(5)]
         [Range(0, 200)]
         [DefaultValue(100)]
         [Slider]
-            public int velocityMulti;
-        [Label("$Mods.UpgradePlus.Configs.KBEff")]
-        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        public int velocityMulti;
         [Increment(5)]
         [Range(0, 200)]
         [DefaultValue(100)]
         [Slider]
-            public int knockbackMulti;
-        [Label("$Mods.UpgradePlus.Configs.SpeedEff")]
-        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        public int knockbackMulti;
         [Increment(5)]
         [Range(0, 100)]
         [DefaultValue(100)]
         [Slider]
-            public int speedMulti;
-        [Label("$Mods.UpgradePlus.Configs.WingEff")]
-        [Tooltip("$Mods.UpgradePlus.Configs.SharedTuneDesc")]
+        public int speedMulti;
         [Increment(5)]
         [Range(0, 200)]
         [DefaultValue(100)]
         [Slider]
-            public int wingMulti;
+        public int wingMulti;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.Misc")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.Misc")]
         [ReloadRequired]
-        [Label("$Mods.UpgradePlus.Configs.AltSprites")]
-        [Tooltip("$Mods.UpgradePlus.Configs.AltSpritesDesc")]
         [Increment(1)]
-        [Range(0,1)]
+        [Range(0, 1)]
         [DefaultValue(0)]
         [Slider]
         [DrawTicks]
-            public int artStyle;
-        [Label("$Mods.UpgradePlus.Configs.CritRolloverDebug")]
+        public int artStyle;
         [DefaultValue(false)]
-            public bool doDebug;
+        public bool doDebug;
 
         [Header("$Mods.UpgradePlus.Configs.NextPage")]
-            public bool ThisOptionDoesNothingButItdBeFunnyIfItSecretlyRecordedWhoActivatesItInSomeSortOfMassSocialExperimentTooBadItsJustAHeader;
+        public bool ThisOptionDoesNothingButItdBeFunnyIfItSecretlyRecordedWhoActivatesItInSomeSortOfMassSocialExperimentTooBadItsJustAHeader;
 
         public override void OnChanged()
         {
@@ -94,75 +74,56 @@ namespace UpgradePlus
         }
     }
 
-    [Label("$Mods.UpgradePlus.Configs.ServerClassName")]
     [BackgroundColor(30, 15, 15, 150)]
     public class Server : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.CoreFeatures")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.CoreFeatures")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.LevelCap")]
-        [Tooltip("$Mods.UpgradePlus.Configs.LevelCapDesc")]
         [Increment(5)]
         [Range(20, 255)]
         [DefaultValue(40)]
-            public int tierCap;
+        public int tierCap;
 
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.StatBalance")]
-        [Tooltip("$Mods.UpgradePlus.Configs.StatBalanceDesc")]
         [Range(0, 3)]
         [DefaultValue(1)]
         [Slider]
         [DrawTicks]
-            public int statFormulaModel;
+        public int statFormulaModel;
 
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.HardmodeCap")]
-        [Tooltip("$Mods.UpgradePlus.Configs.HardmodeCapDesc")]
         [Range(20, 256)]
         [DefaultValue(20)]
-            public int hardmodeCap;
+        public int hardmodeCap;
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.MoonlordCap")]
-        [Tooltip("$Mods.UpgradePlus.Configs.MoonlordCapDesc")]
         [Range(20, 256)]
         [DefaultValue(256)]
-            public int moonlordCap;
+        public int moonlordCap;
 
 
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.RefundOverride")]
-        [Tooltip("$Mods.UpgradePlus.Configs.RefundOverrideDesc")]
         [DefaultValue(true)]
-            public bool doServerRefunds;
+        public bool doServerRefunds;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.TuneFeatures")]
-        [Label("$Mods.UpgradePlus.Configs.Autofire")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.TuneFeatures")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Tooltip("$Mods.UpgradePlus.Configs.AutofireDesc")]
         [Increment(5)]
         [Range(0, 256)]
         [DefaultValue(20)]
-            public int reuseLevel;
-        [Label("$Mods.UpgradePlus.Configs.ToughTokens")]
+        public int reuseLevel;
         [BackgroundColor(100, 50, 50, 255)]
-        [Tooltip("$Mods.UpgradePlus.Configs.ToughTokensDesc")]
         [DefaultValue(false)]
-            public bool toughTokens;
+        public bool toughTokens;
 
-        [Header("$Mods.UpgradePlus.Configs.Shared.Fun")]
+        [Header("$Mods.UpgradePlus.Configs.SharedHeaders.Fun")]
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.CritRollover")]
-        [Tooltip("$Mods.UpgradePlus.Configs.CritRolloverDesc")]
         [DefaultValue(false)]
-            public bool critRollover;
+        public bool critRollover;
         [BackgroundColor(100, 50, 50, 255)]
-        [Label("$Mods.UpgradePlus.Configs.AnythingLevels")]
-        [Tooltip("$Mods.UpgradePlus.Configs.AnythingLevelsDesc")]
         [DefaultValue(false)]
-            public bool anythingLevels;
+        public bool anythingLevels;
 
         public override void OnChanged()
         {

@@ -35,25 +35,10 @@ namespace UpgradePlus.Npcs
 				Rotation = MathHelper.ToRadians(0)
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifiers);
-
-			NPC.Happiness
-				.SetBiomeAffection<ForestBiome>(AffectionLevel.Like)
-				.SetBiomeAffection<SnowBiome>(AffectionLevel.Like)
-
-				.SetBiomeAffection<OceanBiome>(AffectionLevel.Love)
-				.SetBiomeAffection<DesertBiome>(AffectionLevel.Hate)
-
-				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Love)
-				.SetNPCAffection(633, AffectionLevel.Love) // Zoologist
-				.SetNPCAffection(NPCID.Steampunker, AffectionLevel.Love)
-
-				.SetNPCAffection(NPCID.Wizard, AffectionLevel.Like)
-				.SetNPCAffection(NPCID.ArmsDealer, AffectionLevel.Like)
-				.SetNPCAffection(NPCID.TaxCollector, AffectionLevel.Dislike)
-			;
+			NPCID.Sets.NoTownNPCHappiness[NPC.type] = true;
 		}
-        public override string HeadTexture => ("UpgradePlus/Npcs/Blacksmith_Head" + ModContent.GetInstance<Client>().artStyle);
-        public override string Texture{ get { return "UpgradePlus/Npcs/Blacksmith" + ModContent.GetInstance<Client>().artStyle; } }
+		public override string HeadTexture => ("UpgradePlus/Npcs/Blacksmith_Head" + ModContent.GetInstance<Client>().artStyle);
+		public override string Texture { get { return "UpgradePlus/Npcs/Blacksmith" + ModContent.GetInstance<Client>().artStyle; } }
 
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -90,14 +75,14 @@ namespace UpgradePlus.Npcs
 		{
 			return true;
 		}
-		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+		public override bool CanTownNPCSpawn(int numTownNPCs)
 		{
 			// Spawn if EoC, EoW/BoC, or Skele have been defeated
 			return (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3);
 		}
 		public override List<string> SetNPCNameList()
 		{
-			List<string> names = new(){ "Ketsuban", "Hayato", "Jeff", "Doug", "Hugh", "Derf", "Sam", "Peter", "Bartholomew", "Adam", "Sprout", "Jeb!", "ZZAZZ", "Bobby", "Luso" };
+			List<string> names = new() { "Ketsuban", "Hayato", "Jeff", "Doug", "Hugh", "Derf", "Sam", "Peter", "Bartholomew", "Adam", "Sprout", "Jeb!", "ZZAZZ", "Bobby", "Luso" };
 			return names;
 		}
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
@@ -105,10 +90,10 @@ namespace UpgradePlus.Npcs
 			damage = 15;
 			knockback = 4f;
 			if (Main.hardMode)
-            {
+			{
 				damage *= 4;
 				knockback *= 2;
-            }
+			}
 		}
 		public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
 		{
@@ -132,25 +117,26 @@ namespace UpgradePlus.Npcs
 
 		/// <summary> Loops over "Mods.UpgradePlus."+partialPath+"Line"+i so the destination is expected to have Line0 and onward contained </summary>
 		private List<string> GetMultiLinesAtPath(string partialPath)
-        {
+		{
 			List<string> lines = new();
 			for (int i = 0; i < 100; i++)
-            {
+			{
 				// If our output is the same as our input then we've hit an invalid localization key
-				if (GetTrans(partialPath + ".Line" + i) != "Mods.UpgradePlus."+partialPath+".Line"+i)
-                {
+				if (GetTrans(partialPath + ".Line" + i) != "Mods.UpgradePlus." + partialPath + ".Line" + i)
+				{
 					lines.Add(GetTrans(partialPath + ".Line" + i));
 				}
 				// using invalid localization keys as a stopping point so I can be lazy and not hardcode the loop stops
 				else
 				{
+					//If the keys was invalid from the get-go
 					if (i == 0 && Main.netMode != NetmodeID.Server)
-					{ Main.NewText("Please report an error with localization: ["+partialPath+"] to ths UpgradePlus dev"); }
+					{ Main.NewText("Please report an error with localization: [" + partialPath + "] to ths UpgradePlus dev"); }
 					break;
-                }
+				}
 			}
 			return lines;
-        }
+		}
 
 		public List<string> recentDialogue = new();
 		public override string GetChat()
@@ -160,100 +146,115 @@ namespace UpgradePlus.Npcs
 			List<string> condLines = new();
 
 			// Standard Dialogue
-			nonconditionals.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.StandardLines") );
+			nonconditionals.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.StandardLines"));
 
 
 			// Modded Messages
 			if (ModLoader.HasMod("CalamityMod"))
-            {
+			{
 				// Calamity lines
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity") );
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity"));
 				Mod Calamity = ModLoader.GetMod("CalamityMod");
-				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("FAP").Type) > 0)
-                {
+				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("FAP").Type) > -1)
+				{
 					// Fabsol lines
-					condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.DrunkPrincessExists") );
+					condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.DrunkPrincessExists"));
 				}
-				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("WITCH").Type) > 0)
-                {
+				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("WITCH").Type) > -1)
+				{
 					// Calamitas lines
 					List<string> potentialJobs = GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.CalamitasJobs");
-					condLines.Add( GetTrans("BlacksmithNPC.Dialogue.Calamity.CalamitasExists", Main.rand.Next(potentialJobs)) );
+					condLines.Add(GetTrans("BlacksmithNPC.Dialogue.Calamity.CalamitasExists", Main.rand.Next(potentialJobs)));
 				}
 			}
 			if (ModLoader.HasMod("UpgradeEquipment") || ModLoader.HasMod("UpgradeEquipment_hrr"))
-            {
+			{
 				// Upgrade Equip lines
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.UpgradeMods") );
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.UpgradeMods"));
 			}
 
 			// Conditional Vanilla Messages
-			if (NPC.FindFirstNPC(NPCID.TaxCollector) < 0)
+			if (NPC.FindFirstNPC(NPCID.TaxCollector) == -1)
 			{
 				// No Tax Collector
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NoTaxes") );
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NoTaxes"));
 			}
 			else
 			{
 				// Tax Collector
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Taxes") );
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Taxes"));
+			}
+			if (NPC.FindFirstNPC(NPCID.BestiaryGirl) > -1)
+			{
+				// Zoologist
+				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.Flirt", Main.npc[NPC.FindFirstNPC(NPCID.BestiaryGirl)].GivenName));
+			}
+			if (NPC.FindFirstNPC(NPCID.Steampunker) > -1)
+			{
+				// Steampunker
+				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.Flirt", Main.npc[NPC.FindFirstNPC(NPCID.Steampunker)].GivenName));
 			}
 			if (Main.dayTime)
-            {
-				// Daytime lines
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.DayLines") );
+			{
+				// Daytime
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.DayLines"));
 			}
 			else
-            {
-				// Nighttime lines
-				condLines.AddRange( GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NightLines") );
+			{
+				// Night
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.NightLines"));
+			}
+			if (Main.LocalPlayer.ZoneBeach)
+			{
+				// Ocean
+				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.OceanLines"));
 			}
 			if (spent > 1)
-            {
+			{
 				// Spent tokens info
-				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.SpentTokens", String.Format("{0:n0}", spent), String.Format("{0:n0}", Math.Floor((spent + 1) / (short.MaxValue - 1))) ));
-            }
+				condLines.Add(GetTrans("BlacksmithNPC.Dialogue.SpentTokens", String.Format("{0:n0}", spent), String.Format("{0:n0}", Math.Floor((spent + 1) / (short.MaxValue - 1)))));
+			}
 
 			//Default line
 			string MSG = "Wow, you found a secret message! The error message. Either the mod itself or an interaction with another mod has lead to this error :thumbsup:";
 			int category = Main.rand.Next(10);
 
 			for (int i = 0; i < 10; i++)
-            {
+			{
 				if (category > 1)
-                {
+				{
 					MSG = Main.rand.Next(nonconditionals);
 				}
 				else
-                {
+				{
 					MSG = Main.rand.Next(condLines);
 				}
 
 				if (recentDialogue.Contains(MSG))
-                {
+				{
 					continue;
-                }
+				}
 				else
-                {
+				{
 					recentDialogue.Add(MSG);
 					if (recentDialogue.Count > 12)
-                    {
+					{
 						recentDialogue.RemoveAt(0);
 					}
 					break;
-                }
+				}
 			}
 			return MSG;
 
 		}
 
-		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+		public override void OnChatButtonClicked(bool firstButton, ref string shopName)
 		{
 			if (firstButton)
 			{
 				Main.playerInventory = true;
 				Main.npcChatText = "";
-				ModContent.GetInstance<UI.UpgradePlusUI> ()._userInterface.SetState(new UI.UpgradeCanvas());
+				ModContent.GetInstance<UI.UpgradePlusUI>()._userInterface.SetState(new UI.UpgradeCanvas());
 			}
 		}
 		public override void SetChatButtons(ref string button, ref string button2)

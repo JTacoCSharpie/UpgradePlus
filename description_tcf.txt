@@ -57,6 +57,10 @@ The Blacksmith NPC can arrive after Eye of Cthulhu, Skeletron, or a world-evil b
 
 [/SPOILER]
 [SPOILER="Changelog"]
+1.0.10 Hotfix:
+[LIST]
+[*]Hotfix for missing Blacksmith chatbox with Calamity
+[/LIST]
 1.0.9 1.4.4 Port Update:
 [LIST]
 [*]Updated to 1.4.4

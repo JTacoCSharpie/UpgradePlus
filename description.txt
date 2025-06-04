@@ -33,7 +33,10 @@ maxHP+Atk+Def. Boosted in HM + further in postML.
 
 
 --Changelog--
-1.0.9
+1.0.10
+* Hotfix for missing Blacksmith chatbox with Calamity
+
+1.0.9 Release:
 * Updated for 1.4.4
 * Stripped Blacksmith of his happiness
 * Bugfixes for Crit Rollover, Pickaxe mining speed

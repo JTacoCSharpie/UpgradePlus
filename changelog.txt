@@ -1,3 +1,2 @@
 ﻿
-* Updated for 1.4.4
-* Stripped Blacksmith of his happiness
+* Hotfix for missing Blacksmith chatbox with Calamity

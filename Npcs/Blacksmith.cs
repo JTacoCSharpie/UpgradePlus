@@ -155,12 +155,12 @@ namespace UpgradePlus.Npcs
 				// Calamity lines
 				condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity"));
 				Mod Calamity = ModLoader.GetMod("CalamityMod");
-				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("FAP").Type) > -1)
+				if (Calamity.TryFind<ModNPC>("FAP", out ModNPC fab) && NPC.FindFirstNPC(fab.Type)  > -1)
 				{
 					// Fabsol lines
 					condLines.AddRange(GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.DrunkPrincessExists"));
 				}
-				if (NPC.FindFirstNPC(Calamity.Find<ModNPC>("WITCH").Type) > -1)
+                if (Calamity.TryFind<ModNPC>("WITCH", out ModNPC cal) && NPC.FindFirstNPC(cal.Type) > -1)
 				{
 					// Calamitas lines
 					List<string> potentialJobs = GetMultiLinesAtPath("BlacksmithNPC.Dialogue.Calamity.CalamitasJobs");
